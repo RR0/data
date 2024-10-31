@@ -6,7 +6,7 @@ Also, all RR0Data have other RR0Data types as properties, such as:
 
 - [place](https://github.com/RR0/place)
 - people
-- [events[]](src/event/README.md)
+- [events](src/event/README.md)
 
 ```mermaid
 classDiagram
