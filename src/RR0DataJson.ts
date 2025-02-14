@@ -3,11 +3,11 @@ import { Source } from "./source"
 import { RR0EventJson } from "./event/RR0EventJson"
 
 /**
- * Possible types for RR0Data.
+ * Default possible types for RR0Data.
  *
  * @see RR0EventType for event data subtypes ("sighting", etc.)
  */
-export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event" | "article"
+export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event" | "article" | "api"
 
 /**
  * Any kind of data on RR0 (see implementing classes).

@@ -1,12 +1,12 @@
 import { RR0Event } from "./event"
 import { Level2Date as EdtfDate } from "@rr0/time"
 import { Source } from "./source"
-import { RR0DataType } from "./RR0DataJson"
+import { RR0EventType } from "./event/RR0EventJson"
 
 /**
  * Any kind of data on RR0 (see implementing classes).
  */
-export interface RR0Data {
+export interface RR0Data<T = RR0EventType> {
   /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory
@@ -32,7 +32,7 @@ export interface RR0Data {
   /**
    * The data type
    */
-  type?: RR0DataType
+  type?: T
 
   /**
    * Parent data.

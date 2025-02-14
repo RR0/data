@@ -1,5 +1,8 @@
 import { RR0DataJson } from "../RR0DataJson"
 
+/**
+ * Default possible eventTypes for RR0 "event" data type.
+ */
 export type RR0EventType =
   "birth"
   | "death"
@@ -7,6 +10,7 @@ export type RR0EventType =
   | "book"
   | "article"
   | "sighting"
+  | "event"
 
 export interface RR0EventJson extends RR0DataJson {
   type: "event"
