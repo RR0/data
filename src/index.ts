@@ -1,4 +1,5 @@
 export * from "./RR0Data.js"
+export * from "./RR0DataJson.js"
 export * from "./AbstractDataFactory.js"
 export * from "./AbstractDataService.js"
 export * from "./AllDataService.js"
