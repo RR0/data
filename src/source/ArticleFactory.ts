@@ -1,7 +1,7 @@
 import { Article } from "./Article.js"
-import { RR0EventFactory } from "../event/index.js"
-import { TypedDataFactory } from "../TypedDataFactory"
-import { RR0Data } from "../RR0Data"
+import { RR0EventFactory } from "../event/RR0EventFactory.js"
+import { TypedDataFactory } from "../TypedDataFactory.js"
+import { RR0DataJson } from "../RR0DataJson"
 
 export class ArticleFactory extends TypedDataFactory<Article> {
 
@@ -9,9 +9,8 @@ export class ArticleFactory extends TypedDataFactory<Article> {
     super(eventFactory, "article", ["index", "article"])
   }
 
-  parse(data: RR0Data): Article {
-    const article: Article = {...data, type: "article", previousSourceRefs: []}
-    Object.assign(article, data)
-    return article
+  parse(dataJson: RR0DataJson): Article {
+    const base = super.parse(dataJson)
+    return {...base, type: "article", previousSourceRefs: []} as Article
   }
 }

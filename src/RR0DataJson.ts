@@ -7,7 +7,7 @@ import { RR0EventJson } from "./event/RR0EventJson"
  *
  * @see RR0EventType for event data subtypes ("sighting", etc.)
  */
-export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event"
+export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event" | "article"
 
 /**
  * Any kind of data on RR0 (see implementing classes).

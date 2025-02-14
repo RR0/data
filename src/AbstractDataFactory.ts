@@ -45,7 +45,7 @@ export abstract class AbstractDataFactory<T extends RR0Data> implements RR0DataF
         }
       }
     }
-    const data: RR0Data = {time, events: []}
+    const data: RR0Data = {time, events: [], id: dataJson.id, url: dataJson.url, dirName: dataJson.dirName}
     data.events = this.parseEvents(jsonEvents, data)
     return data as T
   }

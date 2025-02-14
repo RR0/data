@@ -66,6 +66,7 @@ export interface RR0Data {
   next?: string
 
   /**
+   * @deprecated Use #notes
    * A possible note about this data.
    */
   note?: string
