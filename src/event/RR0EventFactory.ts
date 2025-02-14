@@ -1,6 +1,6 @@
 import { RR0Event } from "./RR0Event.js"
 import { AbstractDataFactory } from "../AbstractDataFactory"
-import { RR0Data } from "../RR0Data"
+import { RR0EventJson } from "./RR0EventJson"
 
 export class RR0EventFactory extends AbstractDataFactory<RR0Event> {
 
@@ -8,18 +8,16 @@ export class RR0EventFactory extends AbstractDataFactory<RR0Event> {
     super(null)
   }
 
-  createFromData(event: RR0Data): RR0Event {
-    event.time = this.createTimeFromString(event.time as any)
-    switch (event.type) {
-      case "image":
-        event.name = event.name || event.parent?.name
-        event.title = event.title || event.parent?.title
-        break
-      default:
-        if (typeof event.place === "string") {
-          event.place = {name: event.place}
-        }
+  parse(eventJson: RR0EventJson): RR0Event {
+    const time = this.createTimeFromString(eventJson.time as any)
+    const eventType = eventJson.eventType || eventJson["type"]
+    const name = eventJson.name
+    const title = eventJson.title
+    const url = eventJson.url
+    let place = eventJson.place
+    if (typeof place === "string") {
+      place = {name: place}
     }
-    return event as RR0Event
+    return {type: "event", eventType, time, name, title, url, place} as RR0Event
   }
 }

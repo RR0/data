@@ -9,7 +9,7 @@ export class ArticleFactory extends TypedDataFactory<Article> {
     super(eventFactory, "article", ["index", "article"])
   }
 
-  createFromData(data: RR0Data): Article {
+  parse(data: RR0Data): Article {
     const article: Article = {...data, type: "article", previousSourceRefs: []}
     Object.assign(article, data)
     return article

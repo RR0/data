@@ -2,66 +2,66 @@ import path from "path"
 import fs from "fs"
 import { RR0Data } from "./RR0Data.js"
 import { RR0DataFactory } from "./RR0DataFactory.js"
-import { TimeContext } from "@rr0/time"
+import { Level2Date as EdtfDate, TimeContext } from "@rr0/time"
 import { RR0Event, RR0EventFactory } from "./event"
+import { RR0DataJson } from "./RR0DataJson"
+import { RR0EventJson } from "./event/RR0EventJson"
 
-export class AbstractDataFactory<T extends RR0Data> implements RR0DataFactory<T> {
+export abstract class AbstractDataFactory<T extends RR0Data> implements RR0DataFactory<T> {
 
   static readonly defaultImageFileNames = ["portrait.jpg", "portrait.gif", "portrait.png", "portrait.webp"]
 
   /**
    * @param eventFactory The factory to create sub-events.
    */
-  constructor(protected eventFactory: RR0EventFactory) {
+  protected constructor(protected eventFactory: RR0EventFactory) {
   }
 
-  createTimeFromString(timeStr: string): TimeContext | undefined {
+  createTimeFromString(timeStr: string): EdtfDate | undefined {
     if (timeStr as any instanceof TimeContext) {
-      return timeStr as any
+      return (timeStr as any as TimeContext).date
+    }
+    if (timeStr as any instanceof EdtfDate) {
+      return (timeStr as any as EdtfDate)
     }
     if (timeStr) {
-      const time = new TimeContext()
-      time.updateFromStr(timeStr)
-      return time
+      return EdtfDate.fromString(timeStr)
     } else {
       return undefined
     }
   }
 
-  createFromData(data: RR0Data): T {
-    data.time = this.createTimeFromString(data.time as any)
-    const events: RR0Event[] = data.events || []
-    const birthTime = (data as any).birthTime as unknown as string
-    if (birthTime) {
-      delete (data as any).birthTime
-      events.push({type: "birth", time: birthTime as any, events: []})
-    }
-    const deathTime = (data as any).deathTime as unknown as string
-    if (deathTime) {
-      delete (data as any).deathTime
-      events.push({type: "death", time: deathTime as any, events: []})
-    }
-    if (!data.image) {
+  parse(dataJson: RR0DataJson): T {
+    const time = this.createTimeFromString(dataJson.time)
+    const jsonEvents = dataJson.events || []
+    if (!dataJson.image) {
       let hasDefaultFile = false
       for (const defaultImageFile of AbstractDataFactory.defaultImageFileNames) {
-        hasDefaultFile = fs.existsSync(path.join(data.dirName, defaultImageFile))
+        hasDefaultFile = fs.existsSync(path.join(dataJson.dirName, defaultImageFile))
         if (hasDefaultFile) {
-          events.push({type: "image", url: defaultImageFile as any, name: data.name, events: []})
+          jsonEvents.push(
+            {type: "event", eventType: "image", url: defaultImageFile as any, name: dataJson.name, events: []})
           break
         }
       }
     }
-    data.events = this.parseEvents(events, data)
+    const data: RR0Data = {time, events: []}
+    data.events = this.parseEvents(jsonEvents, data)
     return data as T
   }
 
-  protected parseEvents(events: RR0Data[] = [], defaultParent: RR0Data): RR0Event[] {
-    const parsed: RR0Event[] = []
-    for (const event of events) {
-      event.parent = event.parent || defaultParent
-      const resolvedEvent = this.eventFactory.createFromData(event)
-      parsed.push(resolvedEvent)
+  protected parseEvents(jsonEvents: RR0EventJson[] = [], defaultParent: RR0Data): RR0Event[] {
+    const events: RR0Event[] = []
+    for (const eventJson of jsonEvents) {
+      const resolvedEvent = this.eventFactory.parse(eventJson)
+      switch (resolvedEvent.eventType) {
+        case "image":
+          resolvedEvent.name = resolvedEvent.name || defaultParent?.name || "<unknown name>"
+          resolvedEvent.title = resolvedEvent.title || defaultParent?.title || "<unknown title>"
+          break
+      }
+      events.push(resolvedEvent)
     }
-    return parsed
+    return events
   }
 }

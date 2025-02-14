@@ -3,26 +3,27 @@ import { RR0Data } from "./RR0Data.js"
 import { AbstractDataFactory } from "./AbstractDataFactory.js"
 import { RR0EventFactory } from "./event"
 import { FileContents, findDirsContaining } from "@javarome/fileutil"
+import { RR0DataJson, RR0DataType } from "./RR0DataJson"
 
 /**
  * A RR0Data factory which can read either <someType>.json files of index.json with a "type": "<someType>" property.
  */
 export class TypedDataFactory<T extends RR0Data> extends AbstractDataFactory<T> {
 
-  constructor(eventFactory: RR0EventFactory, readonly type: string, readonly fileNames: string[] = [type]) {
+  constructor(eventFactory: RR0EventFactory, readonly type: RR0DataType, readonly fileNames: string[] = [type]) {
     super(eventFactory)
   }
 
   create(file: FileContents): T | undefined {
-    const data = JSON.parse(file.contents) as RR0Data
+    const dataJson = JSON.parse(file.contents) as RR0DataJson
     const basename = path.basename(file.name)
-    if (!data.type) {
-      data.type = basename.substring(0, basename.indexOf(".")).toLowerCase()
+    if (!dataJson.type) {  // Guess type fromfile name
+      dataJson.type = basename.substring(0, basename.indexOf(".")).toLowerCase() as RR0DataType
     }
     let datum: T | undefined
-    if (data.type === this.type) {
-      data.dirName = path.dirname(file.name)
-      datum = this.createFromData(data)
+    if (dataJson.type === this.type) {
+      dataJson.dirName = path.dirname(file.name)
+      datum = this.parse(dataJson)
     }
     return datum
   }

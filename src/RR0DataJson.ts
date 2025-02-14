@@ -1,12 +1,18 @@
 import { RR0Event } from "./event"
-import { Level2Date as EdtfDate } from "@rr0/time"
 import { Source } from "./source"
-import { RR0DataType } from "./RR0DataJson"
+import { RR0EventJson } from "./event/RR0EventJson"
+
+/**
+ * Possible types for RR0Data.
+ *
+ * @see RR0EventType for event data subtypes ("sighting", etc.)
+ */
+export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event"
 
 /**
  * Any kind of data on RR0 (see implementing classes).
  */
-export interface RR0Data {
+export interface RR0DataJson {
   /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory
@@ -27,7 +33,7 @@ export interface RR0Data {
   /**
    * Events of the data.
    */
-  events: RR0Event[]
+  events: RR0EventJson[]
 
   /**
    * The data type
@@ -35,9 +41,9 @@ export interface RR0Data {
   type?: RR0DataType
 
   /**
-   * Parent data.
+   * Parent data id.
    */
-  parent?: RR0Data
+  parent?: string
 
   /**
    * Short name
@@ -57,7 +63,7 @@ export interface RR0Data {
   /**
    * When this data occurred.
    */
-  time?: EdtfDate
+  time?: string
 
   /**
    * If this data is not more relevant, not the latest version, or state of art,
@@ -73,7 +79,7 @@ export interface RR0Data {
   /**
    * Where this data occurred
    */
-  place?: { name: string }
+  place?: string | { name: string }
 
   /**
    * A possible short description of this data.
