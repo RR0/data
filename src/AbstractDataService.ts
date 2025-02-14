@@ -1,10 +1,11 @@
 import { AllDataService } from "./AllDataService.js"
 import { TypedDataFactory } from "./TypedDataFactory.js"
 import { RR0Data } from "./RR0Data.js"
+import { RR0DataJson } from "./RR0DataJson"
 
-export abstract class AbstractDataService<T extends RR0Data> {
+export abstract class AbstractDataService<T extends RR0Data, J extends RR0DataJson> {
 
-  protected constructor(protected readonly dataService: AllDataService, protected factory: TypedDataFactory<T>,
+  protected constructor(protected readonly dataService: AllDataService, protected factory: TypedDataFactory<T, J>,
                         readonly files: string[]) {
   }
 

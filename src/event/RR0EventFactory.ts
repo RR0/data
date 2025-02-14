@@ -2,7 +2,7 @@ import { RR0Event } from "./RR0Event.js"
 import { AbstractDataFactory } from "../AbstractDataFactory"
 import { RR0EventJson } from "./RR0EventJson"
 
-export class RR0EventFactory extends AbstractDataFactory<RR0Event> {
+export class RR0EventFactory extends AbstractDataFactory<RR0Event, RR0EventJson> {
 
   constructor() {
     super(null)

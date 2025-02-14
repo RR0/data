@@ -2,6 +2,7 @@ import { RR0Data } from "./RR0Data.js"
 import { TypedDataFactory } from "./TypedDataFactory.js"
 import { glob } from "glob"
 import { FileContents } from "@javarome/fileutil"
+import { RR0DataJson } from "./RR0DataJson"
 
 /**
  * Fetch RR0 data from JSON files.
@@ -14,7 +15,7 @@ export class AllDataService {
    *
    * @param factories The factories to instantiate different RR0Data types.
    */
-  constructor(readonly factories: TypedDataFactory<RR0Data>[]) {
+  constructor(readonly factories: TypedDataFactory<RR0Data, RR0DataJson>[]) {
   }
 
   async getFromDir<T extends RR0Data = RR0Data>(

@@ -74,7 +74,7 @@ export interface RR0Data<T = RR0DataType> {
   /**
    * Where this data occurred
    */
-  place?: { name: string }
+  place?: { name: string, place?: RR0Data }
 
   /**
    * A possible short description of this data.

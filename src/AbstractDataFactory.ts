@@ -7,7 +7,7 @@ import { RR0Event, RR0EventFactory } from "./event"
 import { RR0DataJson } from "./RR0DataJson"
 import { RR0EventJson } from "./event/RR0EventJson"
 
-export abstract class AbstractDataFactory<T extends RR0Data> implements RR0DataFactory<T> {
+export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJson> implements RR0DataFactory<T> {
 
   static readonly defaultImageFileNames = ["portrait.jpg", "portrait.gif", "portrait.png", "portrait.webp"]
 
@@ -31,7 +31,7 @@ export abstract class AbstractDataFactory<T extends RR0Data> implements RR0DataF
     }
   }
 
-  parse(dataJson: RR0DataJson): T {
+  parse(dataJson: J): T {
     const time = this.createTimeFromString(dataJson.time)
     const jsonEvents = dataJson.events || []
     if (!dataJson.image) {

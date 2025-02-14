@@ -8,14 +8,14 @@ import { RR0DataJson, RR0DataType } from "./RR0DataJson"
 /**
  * A RR0Data factory which can read either <someType>.json files of index.json with a "type": "<someType>" property.
  */
-export class TypedDataFactory<T extends RR0Data> extends AbstractDataFactory<T> {
+export class TypedDataFactory<T extends RR0Data, J extends RR0DataJson> extends AbstractDataFactory<T, J> {
 
   constructor(eventFactory: RR0EventFactory, readonly type: RR0DataType, readonly fileNames: string[] = [type]) {
     super(eventFactory)
   }
 
   create(file: FileContents): T | undefined {
-    const dataJson = JSON.parse(file.contents) as RR0DataJson
+    const dataJson = JSON.parse(file.contents) as J
     const basename = path.basename(file.name)
     if (!dataJson.type) {  // Guess type fromfile name
       dataJson.type = basename.substring(0, basename.indexOf(".")).toLowerCase() as RR0DataType

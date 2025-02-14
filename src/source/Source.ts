@@ -1,4 +1,4 @@
-import { TimeContext } from "@rr0/time"
+import { Level2Date as EdtfDate } from "@rr0/time"
 import { RR0Data } from "../RR0Data"
 
 export type Publication = {
@@ -10,7 +10,7 @@ export type Publication = {
   /**
    * When the publication occurred.
    */
-  time: TimeContext | undefined
+  time: EdtfDate | undefined
 }
 
 /**
