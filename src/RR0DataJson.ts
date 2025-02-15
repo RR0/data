@@ -1,6 +1,7 @@
 import { RR0Event } from "./event"
 import { Source } from "./source"
 import { RR0EventJson } from "./event/RR0EventJson"
+import { NamedPlace } from "@rr0/place"
 
 /**
  * Default possible types for RR0Data.
@@ -79,7 +80,7 @@ export interface RR0DataJson {
   /**
    * Where this data occurred
    */
-  place?: string | { name: string }
+  place?: string | NamedPlace
 
   /**
    * A possible short description of this data.
