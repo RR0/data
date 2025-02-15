@@ -15,4 +15,13 @@ export type RR0EventType =
 export interface RR0EventJson extends RR0DataJson {
   type: "event"
   eventType: RR0EventType
+  /**
+   * When this event occurred.
+   */
+  time?: string
+
+  /**
+   * Where this event occurred
+   */
+  place?: string | { name: string }
 }

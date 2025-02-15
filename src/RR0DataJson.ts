@@ -1,7 +1,5 @@
-import { RR0Event } from "./event"
-import { Source } from "./source"
-import { RR0EventJson } from "./event/RR0EventJson"
-import { NamedPlace } from "@rr0/place"
+import { Source } from "./source/index.js"
+import { RR0EventJson } from "./event/RR0EventJson.js"
 
 /**
  * Default possible types for RR0Data.
@@ -62,11 +60,6 @@ export interface RR0DataJson {
   title?: string
 
   /**
-   * When this data occurred.
-   */
-  time?: string
-
-  /**
    * If this data is not more relevant, not the latest version, or state of art,
    * this will hold the dirname (or name) of its successor.
    */
@@ -76,11 +69,6 @@ export interface RR0DataJson {
    * A possible note about this data.
    */
   note?: string
-
-  /**
-   * Where this data occurred
-   */
-  place?: string | NamedPlace
 
   /**
    * A possible short description of this data.
