@@ -1,5 +1,4 @@
 import { RR0Event } from "./event"
-import { Level2Date as EdtfDate } from "@rr0/time"
 import { Source } from "./source"
 import { RR0DataType } from "./RR0DataJson"
 
@@ -55,26 +54,10 @@ export interface RR0Data<T = RR0DataType> {
   title?: string
 
   /**
-   * When this data occurred.
-   */
-  time?: EdtfDate
-
-  /**
    * If this data is not more relevant, not the latest version, or state of art,
    * this will hold the dirname (or name) of its successor.
    */
   next?: string
-
-  /**
-   * @deprecated Use #notes
-   * A possible note about this data.
-   */
-  note?: string
-
-  /**
-   * Where this data occurred
-   */
-  place?: { name: string, place?: RR0Data }
 
   /**
    * A possible short description of this data.

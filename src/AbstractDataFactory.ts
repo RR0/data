@@ -2,7 +2,6 @@ import path from "path"
 import fs from "fs"
 import { RR0Data } from "./RR0Data.js"
 import { RR0DataFactory } from "./RR0DataFactory.js"
-import { Level2Date as EdtfDate, TimeContext } from "@rr0/time"
 import { RR0Event, RR0EventFactory } from "./event"
 import { RR0DataJson } from "./RR0DataJson"
 import { RR0EventJson } from "./event/RR0EventJson"
@@ -17,22 +16,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   protected constructor(protected eventFactory: RR0EventFactory) {
   }
 
-  createTimeFromString(timeStr: string): EdtfDate | undefined {
-    if (timeStr as any instanceof TimeContext) {
-      return (timeStr as any as TimeContext).date
-    }
-    if (timeStr as any instanceof EdtfDate) {
-      return (timeStr as any as EdtfDate)
-    }
-    if (timeStr) {
-      return EdtfDate.fromString(timeStr)
-    } else {
-      return undefined
-    }
-  }
-
   parse(dataJson: J): T {
-    const time = this.createTimeFromString(dataJson.time)
     const jsonEvents = dataJson.events || []
     if (!dataJson.image) {
       let hasDefaultFile = false
@@ -45,7 +29,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
         }
       }
     }
-    const data: RR0Data = {time, events: [], id: dataJson.id, url: dataJson.url, dirName: dataJson.dirName}
+    const data: RR0Data = {events: [], id: dataJson.id, url: dataJson.url, dirName: dataJson.dirName}
     data.events = this.parseEvents(jsonEvents, data)
     return data as T
   }
