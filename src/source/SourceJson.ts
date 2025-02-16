@@ -15,7 +15,7 @@ export type PublicationJson = {
 /**
  * The origin of some RR0 data.
  */
-export interface SourceJson extends RR0DataJson {
+export type SourceJson = RR0DataJson & {
   /**
    * Dependent sources.
    */

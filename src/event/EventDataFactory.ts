@@ -1,7 +1,8 @@
 import { RR0Event, RR0EventFactory } from "./index"
 import { FileContents } from "@javarome/fileutil"
 import { TypedDataFactory } from "../TypedDataFactory"
-import { RR0EventJson, RR0EventType } from "./RR0EventJson"
+import { RR0EventJson } from "./RR0EventJson"
+import { RR0EventType } from "./RR0EventType"
 
 /**
  * A RR0Data factory which can read either <someType>.json files of index.json with a "type": "<someType>" property.

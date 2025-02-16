@@ -1,4 +1,4 @@
-import { Source } from "./source/index.js"
+import { SourceJson } from "./source/index.js"
 import { RR0EventJson } from "./event/RR0EventJson.js"
 
 /**
@@ -11,7 +11,7 @@ export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event"
 /**
  * Any kind of data on RR0 (see implementing classes).
  */
-export interface RR0DataJson {
+export type RR0DataJson = {
   /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory
@@ -27,12 +27,12 @@ export interface RR0DataJson {
   /**
    * Public URL of the data (not the RR0 URL)
    */
-  readonly url?: string
+  url?: string
 
   /**
    * Events of the data.
    */
-  events: RR0EventJson[]
+  events?: RR0EventJson[]
 
   /**
    * The data type
@@ -78,12 +78,12 @@ export interface RR0DataJson {
   /**
    * External data from which this data was devised.
    */
-  sources?: Source[]
+  sources?: SourceJson[]
 
   /**
    *
    */
-  readonly notes?: string[]
+  notes?: string[]
 
   /**
    * Keywords about that data.
