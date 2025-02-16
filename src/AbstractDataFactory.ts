@@ -15,7 +15,6 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
    */
   protected constructor(protected eventFactory: RR0EventFactory) {
   }
-
   parse(dataJson: J): T {
     const jsonEvents = dataJson.events || []
     if (!dataJson.image) {
@@ -34,17 +33,17 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     return data as T
   }
 
-  protected parseEvents(jsonEvents: RR0EventJson[] = [], defaultParent: RR0Data): RR0Event[] {
+  parseEvents(jsonEvents: RR0EventJson[] = [], defaultParent: RR0Data): RR0Event[] {
     const events: RR0Event[] = []
     for (const eventJson of jsonEvents) {
-      const resolvedEvent = this.eventFactory.parse(eventJson)
-      switch (resolvedEvent.eventType) {
+      const event = this.eventFactory.parse(eventJson)
+      switch (event.eventType) {
         case "image":
-          resolvedEvent.name = resolvedEvent.name || defaultParent?.name || "<unknown name>"
-          resolvedEvent.title = resolvedEvent.title || defaultParent?.title || "<unknown title>"
+          event.name = event.name || defaultParent?.name || "<unknown name>"
+          event.title = event.title || defaultParent?.title || "<unknown title>"
           break
       }
-      events.push(resolvedEvent)
+      events.push(event)
     }
     return events
   }

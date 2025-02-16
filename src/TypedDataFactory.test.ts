@@ -3,6 +3,7 @@ import path from "path"
 import { TypedDataFactory } from "./TypedDataFactory"
 import { RR0EventFactory } from "./event"
 import { FileContents } from "@javarome/fileutil"
+import { NamedPlace } from "@rr0/place"
 
 describe("TypedDataFactory", () => {
 
@@ -20,9 +21,12 @@ describe("TypedDataFactory", () => {
     const events = data.events
     expect(events.length).toBe(3)
     const birth = events.find(event => event.eventType === "birth")
-    expect(birth).toBeDefined()
+    expect(birth.time.year.value).toBe(1940)
     const death = events.find(event => event.eventType === "death")
-    expect(death).toBeDefined()
+    expect(death.time.year.value).toBe(2025)
+    expect(death.time.month.value).toBe(1)
+    expect(death.time.day.value).toBe(4)
+    expect((death.place as NamedPlace).name).toBe("Marseille")
     const portrait = events.find(event => event.eventType === "image")
     expect(portrait.url).toBe("portrait.png")
   })
