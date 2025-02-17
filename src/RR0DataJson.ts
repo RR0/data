@@ -13,6 +13,16 @@ export type RR0DataType = "people" | "place" | "org" | "book" | "case" | "event"
  */
 export type RR0DataJson = {
   /**
+   * @deprecated
+   */
+  birthTime?: string
+
+  /**
+   * @deprecated
+   */
+  deathTime?: string
+
+  /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory
    */

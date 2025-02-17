@@ -22,7 +22,8 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
   }
 
   parse(peopleJson: PeopleJson): People {
-    return new People(peopleJson.events.map(this.eventFactory.parse), peopleJson.occupations, peopleJson.countries)
+    const jsonEvents = peopleJson.events || []
+    return new People(jsonEvents.map(this.eventFactory.parse), peopleJson.occupations, peopleJson.countries)
   }
 }
 
@@ -38,7 +39,7 @@ describe("AllDataService", () => {
       const list = await dataService.getFromDir<People>(dirName, ["people", undefined], fileSpec)
       peopleList.push(...list)
     }
-    expect(peopleList.length).toBe(1)
+    expect(peopleList.length).toBe(2)
     const deforge = peopleList[0]
     const birthEvent = deforge.events.find(event => event.eventType === "birth")
     expect(birthEvent.time.year.value).toBe(1940)
