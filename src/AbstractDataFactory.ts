@@ -6,13 +6,16 @@ import { RR0DataJson } from "./RR0DataJson.js"
 import { RR0Event, RR0EventFactory, RR0EventJson } from "./event/index.js"
 
 export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJson> implements RR0DataFactory<T> {
+
+  static readonly defaultPreviewFileNames = ["portrait.jpg", "portrait.gif", "portrait.png", "portrait.webp"]
+
   /**
    * @param eventFactory The factory to create sub-events.
-   * @param defaultImageFileNames
+   * @param previewFileNames
    */
   protected constructor(
     protected eventFactory: RR0EventFactory,
-    readonly defaultImageFileNames = ["portrait.jpg", "portrait.gif", "portrait.png", "portrait.webp"]
+    protected previewFileNames = AbstractDataFactory.defaultPreviewFileNames
   ) {
   }
 
@@ -28,7 +31,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     }
     if (!dataJson.image) {
       let hasDefaultFile = false
-      for (const defaultImageFile of this.defaultImageFileNames) {
+      for (const defaultImageFile of this.previewFileNames) {
         hasDefaultFile = fs.existsSync(path.join(dataJson.dirName || "", defaultImageFile))
         if (hasDefaultFile) {
           jsonEvents.push(

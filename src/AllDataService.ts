@@ -1,6 +1,6 @@
 import { RR0Data } from "./RR0Data.js"
 import { TypedDataFactory } from "./TypedDataFactory.js"
-import { glob } from "glob"
+import { globSync } from "glob"
 import { FileContents } from "@javarome/fileutil"
 import { RR0DataJson } from "./RR0DataJson"
 
@@ -35,7 +35,7 @@ export class AllDataService {
   protected async read<T extends RR0Data = RR0Data>(dirName: string, fileNames: string[]): Promise<T[]> {
     const dataList: T[] = []
     const p = dirName + "/*(" + fileNames.join("|") + ")"
-    const files = await glob(p)
+    const files = globSync(p)
     for (const file of files) {
       try {
         const dataFile = FileContents.read(file, "utf-8")

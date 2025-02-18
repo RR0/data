@@ -1,0 +1,5 @@
+export * from "./Occupation.js"
+export * from "./People.js"
+export * from "./PeopleFactory.js"
+export * from "./PeopleJson.js"
+export * from "./PeopleService.js"
