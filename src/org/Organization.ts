@@ -14,6 +14,17 @@ export class Organization implements RR0Data {
   events: RR0Event[] = []
 
   constructor(readonly id: string, readonly places: Place[], readonly kind: OrganizationKind,
-              readonly parent?: Organization) {
+              parent?: Organization) {
+    this._parent = parent
+  }
+
+  private _parent: Organization
+
+  get parent() {
+    return this._parent
+  }
+
+  set parent(parent) {
+    this._parent = parent
   }
 }

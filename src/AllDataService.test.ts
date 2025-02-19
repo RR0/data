@@ -43,5 +43,6 @@ describe("AllDataService", () => {
     expect(orgList.length).toBe(1)
     const faa = orgList.find(faa => faa.dirName === "test/org/us/faa")
     expect(faa.type).toBe("org")
+    expect(faa.title).toBe("FAA")
   })
 })

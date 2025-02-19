@@ -16,6 +16,7 @@ export class OrganizationFactory extends TypedDataFactory<Organization, Organiza
     const org = new Organization(id, orgJson.places, orgJson.kind)
     org.title = base.title
     org.dirName = base.dirName
+    org.parent = base.parent
     return org
   }
 }
