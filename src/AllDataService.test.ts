@@ -1,14 +1,14 @@
 import { describe, expect, test } from "@javarome/testscript"
 import { AllDataService } from "./AllDataService"
-import { RR0EventFactory } from "./event"
-import { Occupation, People, PeopleFactory } from "./people"
-import { CountryCode } from "./org"
+import { Occupation, People } from "./people"
+import { CountryCode, Organization } from "./org"
 import { Gender } from "@rr0/common"
+import { rr0TestUtil } from "./test"
 
 describe("AllDataService", () => {
 
-  test("create from file", async () => {
-    const peopleFactory = new PeopleFactory(new RR0EventFactory())
+  test("people from file", async () => {
+    const peopleFactory = rr0TestUtil.peopleFactory
     const dataService = new AllDataService([peopleFactory])
     const peopleFiles = await peopleFactory.getFiles()
     let peopleList: People[] = []
@@ -28,5 +28,20 @@ describe("AllDataService", () => {
     expect(deforge.countries).toEqual([CountryCode.fr])
     expect(deforge.gender).toEqual(Gender.male)
     expect(deforge.discredited).toEqual(false)
+  })
+
+  test("org from file", async () => {
+    const orgFactory = rr0TestUtil.orgFactory
+    const dataService = new AllDataService([orgFactory])
+    const peopleFiles = await orgFactory.getFiles()
+    let orgList: Organization[] = []
+    const fileSpec = ["org*.json", "index*.json"]
+    for (const dirName of peopleFiles) {
+      const list = await dataService.getFromDir<Organization>(dirName, ["org", undefined], fileSpec)
+      orgList.push(...list)
+    }
+    expect(orgList.length).toBe(1)
+    const faa = orgList.find(faa => faa.dirName === "test/org/us/faa")
+    expect(faa.type).toBe("org")
   })
 })

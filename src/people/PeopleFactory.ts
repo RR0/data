@@ -2,7 +2,6 @@ import { People } from "./People.js"
 import { PeopleJson } from "./PeopleJson.js"
 import { RR0EventFactory } from "../event"
 import { TypedDataFactory } from "../TypedDataFactory"
-import { StringUtil } from "../util/string/string"
 import { Occupation } from "./Occupation"
 import { CountryCode } from "../org"
 import { Gender } from "@rr0/common"
@@ -63,22 +62,20 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
    */
   protected completeFromDirName(peopleJson: PeopleJson): PeopleJson {
     const dirName = peopleJson.dirName
-    const result = {...peopleJson, dirName: dirName || ""}
+    const completedJson = super.completeFromDirName(peopleJson)
     if (dirName) {
-      const lastSlash = dirName.lastIndexOf("/")
-      const lastDir = dirName.substring(lastSlash + 1)
-      const title = StringUtil.camelToText(lastDir)
+      const title = completedJson.title
       const firstSpace = title.indexOf(" ")
       const lastName = title.substring(0, firstSpace)
-      result.lastName = peopleJson.lastName || lastName
+      completedJson.lastName = peopleJson.lastName || lastName
       let firstNames = peopleJson.firstNames || []
       if (firstNames.length <= 0 && firstSpace > 0) {
         const firstNameStr = title.substring(firstSpace + 1)
         firstNames = firstNameStr.split(" ")
       }
-      result.firstNames = firstNames
-      result.title = `${firstNames.join(" ")} ${lastName}`
+      completedJson.firstNames = firstNames
+      completedJson.title = `${firstNames.join(" ")} ${lastName}`
     }
-    return result
+    return completedJson
   }
 }

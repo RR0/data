@@ -20,6 +20,20 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   }
 
   parse(dataJson: J): T {
+    const jsonEvents = this.getDefaultEvents(dataJson)
+    const data: RR0Data = {
+      events: [],
+      id: dataJson.id,
+      url: dataJson.url,
+      dirName: dataJson.dirName,
+      title: dataJson.title,
+      type: dataJson.type
+    }
+    data.events = this.parseEvents(jsonEvents, data)
+    return data as T
+  }
+
+  protected getDefaultEvents(dataJson: J) {
     const jsonEvents = dataJson.events || []
     const birthTime = dataJson.birthTime
     if (birthTime) {
@@ -40,9 +54,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
         }
       }
     }
-    const data: RR0Data = {events: [], id: dataJson.id, url: dataJson.url, dirName: dataJson.dirName}
-    data.events = this.parseEvents(jsonEvents, data)
-    return data as T
+    return jsonEvents
   }
 
   parseEvents(jsonEvents: RR0EventJson[] = [], defaultParent: RR0Data): RR0Event[] {

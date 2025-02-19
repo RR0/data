@@ -7,11 +7,13 @@ import { rr0TestUtil } from "../test"
 describe("PeopleService", () => {
 
   const rootDir = "test/people"
+  const hynekDir = path.join(rootDir, "h/HynekJosefAllen")
+  const beauDir = path.join(rootDir, "b/BeauJerome")
   const files = [
     path.join(rootDir, "a/Aristote"),
-    path.join(rootDir, "b/BeauJerome"),
+    beauDir,
     path.join(rootDir, "c/CondonEdwardU"),
-    path.join(rootDir, "h/HynekJosefAllen"),
+    hynekDir,
     path.join(rootDir, "v/VonBraunWerner"),
     path.join("test/science/crypto/ufo/enquete/dossier", "Villa")
   ]
@@ -87,5 +89,11 @@ describe("PeopleService", () => {
     expect(people.dirName).toBe(path.join(rootDir, "a/Aristote"))
     expect(people.occupations).toEqual([])
     expect(people.pseudonyms).toEqual([])
+  })
+
+  test("build url", () => {
+    expect(service.getUrl("Beau", ["Jérôme"])).toBe(beauDir)
+    expect(service.getUrl("Beau", ["Jérôme", "Pierre"])).toBe(path.join(rootDir, "b/BeauJeromePierre"))
+    expect(service.getUrl("VonBraun", ["Werner"])).toBe(path.join(rootDir, "v/VonBraunWerner"))
   })
 })

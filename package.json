@@ -2,7 +2,7 @@
   "name": "@rr0/data",
   "type": "module",
   "author": "Jérôme Beau <rr0@rr0.org> (https://rr0.org)",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "RR0 data model",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "rm -Rf dist && tsc --project tsconfig.prod.json",
     "prepublishOnly": "npm run build",
     "test": "testscript",
-    "test-one": "testscript src/people/People.test.ts",
+    "test-one": "testscript src/AllDataService.test.ts",
     "test-ci": "rm -Rf out && testscript"
   },
   "dependencies": {
