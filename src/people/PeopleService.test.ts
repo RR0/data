@@ -21,8 +21,8 @@ describe("PeopleService", () => {
 
   test("build people with one first name", () => {
     const fromName = service.createFromFullName("Jérôme Beau")
-    const expected = new People(["Jérôme"], "Beau", [], [], [], false, undefined, undefined, undefined,
-      undefined, path.join(rootDir, "b/BeauJerome"))
+    const expected = new People(["Jérôme"], "Beau", [], [], [], false, undefined, undefined,
+      path.join(rootDir, "b/BeauJerome"))
     expect(fromName).toEqual(expected)
   })
 

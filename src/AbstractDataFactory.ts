@@ -33,7 +33,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     return data as T
   }
 
-  protected getDefaultEvents(dataJson: J) {
+  getDefaultEvents(dataJson: J) {
     const jsonEvents = dataJson.events || []
     const birthTime = dataJson.birthTime
     if (birthTime) {

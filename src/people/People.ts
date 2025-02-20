@@ -33,11 +33,9 @@ export class People implements RR0Data {
     /**
      * @deprecated Use a "birth"-typed sub-data instead.
      */
-    birthTime?: EdtfDate,
-    deathTime?: EdtfDate,
     readonly gender = Gender.male,
     readonly id = lastName + firstNames.join(""),
-    readonly dirName?: string,
+    readonly dirName: string = "",
     public image?: string,
     readonly url?: string,
     readonly events: RR0Event[] = []
@@ -45,14 +43,6 @@ export class People implements RR0Data {
     this.lastAndFirstName = this.getLastAndFirstName()
     this.title = this.firstAndLastName
     this.name = this.lastName
-    if (!this.birthTime && birthTime) {
-      events.push(
-        {type: "event", eventType: "birth", time: birthTime, events: []})
-    }
-    if (!this.deathTime && deathTime) {
-      events.push(
-        {type: "event", eventType: "death", time: deathTime, events: []})
-    }
   }
 
   get birthTime(): EdtfDate {
@@ -99,22 +89,8 @@ export class People implements RR0Data {
   }
 
   clone(): People {
-    return new People(
-      this.firstNames,
-      this.lastName,
-      this.pseudonyms,
-      this.occupations,
-      this.countries,
-      this.discredited,
-      this.birthTime,
-      this.deathTime,
-      this.gender,
-      this.id,
-      this.dirName,
-      this.image,
-      this.url,
-      this.events
-    )
+    return new People(this.firstNames, this.lastName, this.pseudonyms, this.occupations, this.countries,
+      this.discredited, this.gender, this.id, this.dirName, this.image, this.url, this.events)
   }
 
   protected getLastAndFirstNames() {

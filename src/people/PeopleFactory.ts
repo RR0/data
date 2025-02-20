@@ -25,9 +25,8 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const birthTime = birthTimeJson ? EdtfDate.fromString(birthTimeJson) : undefined
     const deathTimeJSon = peopleJson.deathTime
     const deathTime = deathTimeJSon ? EdtfDate.fromString(deathTimeJSon) : undefined
-    const people = new People(peopleJson.firstNames, peopleJson.lastName, peopleJson.pseudonyms,
-      occupations, countries, discredited, birthTime, deathTime, gender,
-      peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events)
+    const people = new People(peopleJson.firstNames, peopleJson.lastName, peopleJson.pseudonyms, occupations, countries,
+      discredited, gender, peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events)
     peopleJson.name = people.name
     let title = peopleJson.title
     let qualifier: string | undefined
