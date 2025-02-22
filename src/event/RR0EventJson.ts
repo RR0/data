@@ -14,5 +14,5 @@ export type RR0EventJson = RR0DataJson & {
   /**
    * Where this event occurred
    */
-  place?: string | { name: string }
+  place?: string
 }
