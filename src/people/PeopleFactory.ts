@@ -5,8 +5,7 @@ import { TypedDataFactory } from "../TypedDataFactory"
 import { Occupation } from "./Occupation"
 import { CountryCode } from "../org"
 import { Gender } from "@rr0/common"
-import { Level2Date as EdtfDate } from "@rr0/time"
-import { RR0Data } from "../RR0Data"
+import * as assert from "node:assert"
 
 export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
 
@@ -14,67 +13,53 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     super(eventFactory, "people")
   }
 
+  namesFromTitle(title: string): { lastName: string, firstNames: string[] } {
+    title = title.trim()
+    let lastName: string
+    let firstNames: string[]
+    let commaPos = title.indexOf(",")
+    if (commaPos > 0) {
+      lastName = title.substring(0, commaPos).trim()
+      firstNames = title.substring(commaPos + 1).trim().replace("  ", " ").split(" ")
+    } else {
+      let spaceParts = title.split(" ")
+      if (spaceParts.length > 1) {
+        const lastPos = spaceParts.length - 1
+        lastName = spaceParts[lastPos]
+        firstNames = spaceParts.slice(0, lastPos)
+      } else {
+        lastName = ""
+        firstNames = [title]
+      }
+    }
+    return {lastName, firstNames}
+  }
+
   parse(peopleJson: PeopleJson): People {
-    peopleJson = this.completeFromDirName(peopleJson)
-    const peopleData = Object.assign(peopleJson, super.parse(peopleJson)) as RR0Data
+    const peopleData = super.parse(peopleJson)
+    let title = peopleData.title
+    const {lastName, firstNames} = title ? this.namesFromTitle(title) : {
+      lastName: peopleJson.lastName || "",
+      firstNames: peopleJson.firstNames || []
+    }
+    const pseudonyms = peopleJson.pseudonyms || []
+    if (!title) {
+      title = (firstNames.join(" ") + lastName || "") || pseudonyms.join(" ") || ""
+    }
+    assert.ok(title, `Could not devise People title from ${JSON.stringify(peopleJson)}`)
     const occupations = (peopleJson.occupations || []).map(occupation => Occupation[occupation])
     const countries = (peopleJson.countries || []).map(country => CountryCode[country])
     const discredited = peopleJson.discredited || false
     const gender = Gender[peopleJson.gender] || Gender.male
-    const birthTimeJson = peopleJson.birthTime
-    const birthTime = birthTimeJson ? EdtfDate.fromString(birthTimeJson) : undefined
-    const deathTimeJSon = peopleJson.deathTime
-    const deathTime = deathTimeJSon ? EdtfDate.fromString(deathTimeJSon) : undefined
-    const people = new People(peopleJson.firstNames, peopleJson.lastName, peopleJson.pseudonyms, occupations, countries,
-      discredited, gender, peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events)
-    peopleJson.name = people.name
-    let title = peopleJson.title
     let qualifier: string | undefined
-    if (title) {
-      const qualifStart = title.indexOf("(")
-      if (qualifStart > 0) {
-        qualifier = title.substring(qualifStart + 1, title.indexOf(")"))
-        title = title.substring(0, qualifStart).trim()
-      }
-      const names = title.split(",")
-      if (names.length > 1) {
-        people.lastName = people.lastName || names.splice(0, 1)[0].trim()
-        if (!people.firstNames || people.firstNames.length <= 0) {
-          people.firstNames.length = 0
-          people.firstNames.push(...names[0].trim().split(" "))
-        }
-      } else {
-        const names = title.split(" ")
-        people.firstNames = people.firstNames || names.slice(0, names.length - 1)
-        people.name = people.lastName = people.lastName || names[names.length - 1]
-      }
-      people.lastAndFirstName = people.getLastAndFirstName()
+    const qualifStart = title.indexOf("(")
+    if (qualifStart > 0) {
+      qualifier = title.substring(qualifStart + 1, title.indexOf(")"))
+      title = title.substring(0, qualifStart).trim()
     }
-    people.title = people.firstAndLastName + (qualifier ? ` (${qualifier})` : "")
-    return people
-  }
-
-  /**
-   * Determine people name from directory name.
-   *
-   * @param peopleJson
-   */
-  protected completeFromDirName(peopleJson: PeopleJson): PeopleJson {
-    const dirName = peopleJson.dirName
-    const completedJson = super.completeFromDirName(peopleJson)
-    if (dirName) {
-      const title = completedJson.title
-      const firstSpace = title.indexOf(" ")
-      const lastName = title.substring(0, firstSpace)
-      completedJson.lastName = peopleJson.lastName || lastName
-      let firstNames = peopleJson.firstNames || []
-      if (firstNames.length <= 0 && firstSpace > 0) {
-        const firstNameStr = title.substring(firstSpace + 1)
-        firstNames = firstNameStr.split(" ")
-      }
-      completedJson.firstNames = firstNames
-      completedJson.title = `${firstNames.join(" ")} ${lastName}`
-    }
-    return completedJson
+    peopleJson.name = peopleJson.name || lastName || firstNames[0] || pseudonyms[0] || ""
+    peopleJson.title = title + (qualifier ? ` (${qualifier})` : "")
+    return new People(firstNames, lastName, pseudonyms, occupations, countries,
+      discredited, gender, peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events)
   }
 }

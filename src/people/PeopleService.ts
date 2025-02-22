@@ -23,38 +23,25 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
   getUrl(lastName: string, firstNames: string[]): string {
     const normalizedLastName = StringUtil.removeAccents(lastName)
     const normalizedFirstNames = firstNames.map(StringUtil.removeAccents).map(StringUtil.withoutDots)
+    const firstLetter = (normalizedLastName + normalizedFirstNames.join("")).charAt(0).toLowerCase()
     return path.join(this.config.rootDir,
-      `${normalizedLastName.charAt(0).toLowerCase()}/${normalizedLastName}${normalizedFirstNames.join("")}`)
+      `${firstLetter}/${normalizedLastName}${normalizedFirstNames.join("")}`)
   }
 
-  createFromFullName(fullName: string): People {
-    fullName = fullName.trim()
-    let lastName: string
-    let firstNames: string[]
-    let commaPos = fullName.indexOf(",")
-    if (commaPos > 0) {
-      lastName = fullName.substring(0, commaPos).trim()
-      firstNames = fullName.substring(commaPos + 1).trim().replace("  ", " ").split(" ")
-    } else {
-      let spaceParts = fullName.split(" ")
-      if (spaceParts.length > 1) {
-        const lastPos = spaceParts.length - 1
-        lastName = spaceParts[lastPos]
-        firstNames = spaceParts.slice(0, lastPos)
-      } else {
-        lastName = fullName
-        firstNames = []
-      }
-    }
-    const dirName: string | undefined = this.cache.get(lastName.toLowerCase())?.dirName || this.getUrl(lastName,
-      firstNames)
-    const created = this.peopleFactory.parse({firstNames, lastName, dirName})
+  createFromTitle(title: string): People {
+    const {lastName, firstNames} = this.peopleFactory.namesFromTitle(title)
+    const dirName: string | undefined = this.dirNameFromNames(lastName, firstNames)
+    const created = this.peopleFactory.parse({title, firstNames, lastName, dirName})
     if (this.files.indexOf(dirName) < 0) {
       console.warn(`Could not find dirName "${dirName}" in PeopleService files; clearing dirName`)
       Object.assign(created, {dirName: undefined})
     }
     this.cache.set(lastName, created)
     return created
+  }
+
+  protected dirNameFromNames(lastName: string, firstNames: string[]) {
+    return this.cache.get(lastName.toLowerCase())?.dirName || this.getUrl(lastName, firstNames)
   }
 
   async getAll(): Promise<People[]> {

@@ -39,19 +39,19 @@ export interface RR0Data<T = RR0DataType> {
   parent?: RR0Data
 
   /**
-   * Short name
+   * The name used to reference.
    */
   name?: string
+
+  /**
+   * The name used to describe.
+   */
+  title?: string
 
   /**
    * Unofficial name
    */
   surname?: string
-
-  /**
-   * Long name
-   */
-  title?: string
 
   /**
    * If this data is not more relevant, not the latest version, or state of art,

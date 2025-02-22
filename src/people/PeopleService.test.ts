@@ -9,25 +9,26 @@ describe("PeopleService", () => {
   const rootDir = "test/people"
   const hynekDir = path.join(rootDir, "h/HynekJosefAllen")
   const beauDir = path.join(rootDir, "b/BeauJerome")
+  const aristoteDir = path.join(rootDir, "a/Aristote")
+  const vonBraunDir = path.join(rootDir, "v/VonBraunWerner")
   const files = [
-    path.join(rootDir, "a/Aristote"),
+    aristoteDir,
     beauDir,
     path.join(rootDir, "c/CondonEdwardU"),
     hynekDir,
-    path.join(rootDir, "v/VonBraunWerner"),
+    vonBraunDir,
     path.join("test/science/crypto/ufo/enquete/dossier", "Villa")
   ]
   const service = new PeopleService(rr0TestUtil.dataService, rr0TestUtil.peopleFactory, {rootDir, files})
 
   test("build people with one first name", () => {
-    const fromName = service.createFromFullName("Jérôme Beau")
-    const expected = new People(["Jérôme"], "Beau", [], [], [], false, undefined, undefined,
-      path.join(rootDir, "b/BeauJerome"))
+    const expected = new People(["Jérôme"], "Beau", [], [], [], false, undefined, undefined, beauDir)
+    const fromName = service.createFromTitle("Jérôme Beau")
     expect(fromName).toEqual(expected)
   })
 
   test("build people with two first names", () => {
-    const people = service.createFromFullName("Jérôme Pierre Beau")
+    const people = service.createFromTitle("Jérôme Pierre Beau")
     expect(people.title).toBe("Jérôme Pierre Beau")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Beau")
@@ -40,20 +41,20 @@ describe("PeopleService", () => {
   })
 
   test("build people with two last names", () => {
-    const people = service.createFromFullName("Werner VonBraun")
+    const people = service.createFromTitle("Werner VonBraun")
     expect(people.title).toBe("Werner Von Braun")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("VonBraun")
     expect(people.firstNames).toEqual(["Werner"])
     expect(people.hoax).toBe(false)
     expect(people.discredited).toBe(false)
-    expect(people.dirName).toBe(path.join(rootDir, "v/VonBraunWerner"))
+    expect(people.dirName).toBe(vonBraunDir)
     expect(people.occupations).toEqual([])
     expect(people.pseudonyms).toEqual([])
   })
 
   test("build people with one initial first names", () => {
-    const people = service.createFromFullName("Edward U. Condon")
+    const people = service.createFromTitle("Edward U. Condon")
     expect(people.title).toBe("Edward U. Condon")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Condon")
@@ -66,7 +67,7 @@ describe("PeopleService", () => {
   })
 
   test("build people with last name first", () => {
-    const people = service.createFromFullName("Hynek, Josef Allen")
+    const people = service.createFromTitle("Hynek, Josef Allen")
     expect(people.title).toBe("Josef Allen Hynek")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Hynek")
@@ -79,14 +80,14 @@ describe("PeopleService", () => {
   })
 
   test("Single name", () => {
-    const people = service.createFromFullName("Aristote")
+    const people = service.createFromTitle("Aristote")
     expect(people.title).toBe("Aristote")
     expect(people.countries).toEqual([])
-    expect(people.lastName).toBe("Aristote")
-    expect(people.firstNames).toEqual([])
+    expect(people.firstNames[0]).toBe("Aristote")
+    expect(people.lastName).toEqual("")
     expect(people.hoax).toBe(false)
     expect(people.discredited).toBe(false)
-    expect(people.dirName).toBe(path.join(rootDir, "a/Aristote"))
+    expect(people.dirName).toBe(aristoteDir)
     expect(people.occupations).toEqual([])
     expect(people.pseudonyms).toEqual([])
   })
@@ -94,6 +95,6 @@ describe("PeopleService", () => {
   test("build url", () => {
     expect(service.getUrl("Beau", ["Jérôme"])).toBe(beauDir)
     expect(service.getUrl("Beau", ["Jérôme", "Pierre"])).toBe(path.join(rootDir, "b/BeauJeromePierre"))
-    expect(service.getUrl("VonBraun", ["Werner"])).toBe(path.join(rootDir, "v/VonBraunWerner"))
+    expect(service.getUrl("VonBraun", ["Werner"])).toBe(vonBraunDir)
   })
 })

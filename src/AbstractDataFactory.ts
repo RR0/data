@@ -4,6 +4,7 @@ import { RR0Data } from "./RR0Data.js"
 import { RR0DataFactory } from "./RR0DataFactory.js"
 import { RR0DataJson } from "./RR0DataJson.js"
 import { RR0Event, RR0EventFactory, RR0EventJson } from "./event/index.js"
+import { StringUtil } from "./util/string/string"
 
 export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJson> implements RR0DataFactory<T> {
 
@@ -19,15 +20,31 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   ) {
   }
 
+  /**
+   * Determine people name from directory name.
+   *
+   * @param dirName
+   */
+  titleFromDirName(dirName: string): string {
+    const title = StringUtil.camelToText(path.basename(dirName))
+    const names = title.split(" ")
+    return names.length <= 1 ? title : names[0] + ", " + names.slice(1)
+  }
+
   parse(dataJson: J): T {
+    let title = dataJson.title
+    let dirName = dataJson.dirName
+    if (!title && dirName) {
+      title = this.titleFromDirName(dirName)
+    }
     const jsonEvents = this.getDefaultEvents(dataJson)
     const data: RR0Data = {
-      events: [],
       id: dataJson.id,
+      type: dataJson.type,
+      dirName,
+      title,
       url: dataJson.url,
-      dirName: dataJson.dirName,
-      title: dataJson.title,
-      type: dataJson.type
+      events: []
     }
     data.events = this.parseEvents(jsonEvents, data)
     return data as T

@@ -10,8 +10,7 @@ export class OrganizationFactory extends TypedDataFactory<Organization, Organiza
   }
 
   parse(orgJson: OrganizationJson): Organization {
-    const completedJson = this.completeFromDirName(orgJson)
-    const base = super.parse(completedJson)
+    const base = super.parse(orgJson)
     const id = base.id || orgJson.dirName.replaceAll("/", "-")
     const org = new Organization(id, orgJson.places, orgJson.kind)
     org.title = base.title

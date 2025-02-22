@@ -24,7 +24,13 @@ export class People implements RR0Data {
     public firstNames: string[] = [],
     public lastName = "",
     readonly pseudonyms: string[] = [],
+    /**
+     * @deprecated
+     */
     readonly occupations: Occupation[] = [],
+    /**
+     * @deprecated
+     */
     readonly countries: CountryCode[] = [],
     /**
      * The people has been caught lying or has confessed a hoax.
@@ -38,7 +44,8 @@ export class People implements RR0Data {
     readonly dirName: string = "",
     public image?: string,
     readonly url?: string,
-    readonly events: RR0Event[] = []
+    readonly events: RR0Event[] = [],
+    readonly qualifier?: string
   ) {
     this.lastAndFirstName = this.getLastAndFirstName()
     this.title = this.firstAndLastName

@@ -1,0 +1,26 @@
+{
+  "occupations": [
+    "astronomer",
+    "mathematician",
+    "physician"
+  ],
+  "countries": [
+    "gr"
+  ],
+  "events": [
+    {
+      "type": "birth",
+      "time": "-384",
+      "place": "Stagire",
+      "title": "Stavros",
+      "notes": [
+        "sur les bords de la mer Egée"
+      ]
+    },
+    {
+      "type": "death",
+      "time": "-322",
+      "place": "Île d'Eubée (Grèce)"
+    }
+  ]
+}

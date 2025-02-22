@@ -4,7 +4,6 @@ import { AbstractDataFactory } from "./AbstractDataFactory.js"
 import { RR0EventFactory } from "./event"
 import { FileContents, findDirsContaining } from "@javarome/fileutil"
 import { RR0DataJson, RR0DataType } from "./RR0DataJson"
-import { StringUtil } from "./util/string/string"
 
 /**
  * A RR0Data factory which can read either <someType>.json files of index.json with a "type": "<someType>" property.
@@ -13,22 +12,6 @@ export class TypedDataFactory<T extends RR0Data, J extends RR0DataJson> extends 
 
   constructor(eventFactory: RR0EventFactory, readonly type: RR0DataType, readonly fileNames: string[] = [type]) {
     super(eventFactory)
-  }
-
-  /**
-   * Determine people name from directory name.
-   *
-   * @param dataJson
-   */
-  protected completeFromDirName(dataJson: J): J {
-    const dirName = dataJson.dirName
-    const completedJson = {...dataJson, dirName: dirName || ""}
-    if (dirName) {
-      const lastSlash = dirName.lastIndexOf("/")
-      const lastDir = dirName.substring(lastSlash + 1)
-      completedJson.title = completedJson.title || StringUtil.camelToText(lastDir)
-    }
-    return completedJson
   }
 
   create(file: FileContents): T | undefined {
