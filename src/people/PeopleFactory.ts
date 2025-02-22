@@ -13,10 +13,11 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     super(eventFactory, "people")
   }
 
-  namesFromTitle(title: string): { lastName: string, firstNames: string[] } {
+  namesFromTitle(title: string): { lastName: string, firstNames: string[], qualifier?: string } {
     title = title.trim()
     let lastName: string
     let firstNames: string[]
+    let qualifier: string
     let commaPos = title.indexOf(",")
     if (commaPos > 0) {
       lastName = title.substring(0, commaPos).trim()
@@ -24,21 +25,30 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     } else {
       let spaceParts = title.split(" ")
       if (spaceParts.length > 1) {
-        const lastPos = spaceParts.length - 1
-        lastName = spaceParts[lastPos]
+        let qualifierDone = false
+        let lastPos = spaceParts.length - 1
+        do {
+          lastName = spaceParts[lastPos]
+          if (lastName.startsWith("(")) {
+            qualifier = lastName.substring(1, lastName.length - 1)
+            lastPos--
+          } else {
+            qualifierDone = true
+          }
+        } while (qualifier && !qualifierDone)
         firstNames = spaceParts.slice(0, lastPos)
       } else {
         lastName = ""
         firstNames = [title]
       }
     }
-    return {lastName, firstNames}
+    return {lastName, firstNames, qualifier}
   }
 
   parse(peopleJson: PeopleJson): People {
     const peopleData = super.parse(peopleJson)
     let title = peopleData.title
-    const {lastName, firstNames} = title ? this.namesFromTitle(title) : {
+    const {lastName, firstNames, qualifier} = title ? this.namesFromTitle(title) : {
       lastName: peopleJson.lastName || "",
       firstNames: peopleJson.firstNames || []
     }
@@ -51,15 +61,9 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const countries = (peopleJson.countries || []).map(country => CountryCode[country])
     const discredited = peopleJson.discredited || false
     const gender = Gender[peopleJson.gender] || Gender.male
-    let qualifier: string | undefined
-    const qualifStart = title.indexOf("(")
-    if (qualifStart > 0) {
-      qualifier = title.substring(qualifStart + 1, title.indexOf(")"))
-      title = title.substring(0, qualifStart).trim()
-    }
     peopleJson.name = peopleJson.name || lastName || firstNames[0] || pseudonyms[0] || ""
-    peopleJson.title = title + (qualifier ? ` (${qualifier})` : "")
     return new People(firstNames, lastName, pseudonyms, occupations, countries,
-      discredited, gender, peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events)
+      discredited, gender, peopleData.id, peopleData.dirName, peopleData.image, peopleData.url, peopleData.events,
+      qualifier)
   }
 }
