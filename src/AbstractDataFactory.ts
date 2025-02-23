@@ -60,16 +60,22 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     if (deathTime) {
       jsonEvents.push({type: "event", eventType: "death", time: deathTime as any, events: []})
     }
-    if (!dataJson.image) {
+    let imageJsonEvent: RR0EventJson = {type: "event", eventType: "image", events: []}
+    if (dataJson.image) {
+      imageJsonEvent.url = dataJson.image
+    } else {
       let hasDefaultFile = false
       for (const defaultImageFile of this.previewFileNames) {
         hasDefaultFile = fs.existsSync(path.join(dataJson.dirName || "", defaultImageFile))
         if (hasDefaultFile) {
-          jsonEvents.push(
-            {type: "event", eventType: "image", url: defaultImageFile as any, name: dataJson.name, events: []})
+          imageJsonEvent.url = defaultImageFile
+          imageJsonEvent.name = dataJson.name   // In a default portrait image, label is parent's name
           break
         }
       }
+    }
+    if (imageJsonEvent.url) {
+      jsonEvents.push(imageJsonEvent)
     }
     return jsonEvents
   }

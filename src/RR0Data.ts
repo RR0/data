@@ -21,7 +21,7 @@ export interface RR0Data<T = RR0DataType> {
   /**
    * Public URL of the data (not the RR0 URL)
    */
-  readonly url?: string
+  url?: string
 
   /**
    * Events of the data.

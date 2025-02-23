@@ -20,7 +20,7 @@
     "build": "rm -Rf dist && tsc --project tsconfig.prod.json",
     "prepublishOnly": "npm run build",
     "test": "testscript",
-    "test-one": "testscript src/AllDataService.test.ts",
+    "test-one": "testscript src/event/EventDataFactory.test.ts",
     "test-ci": "rm -Rf out && testscript"
   },
   "dependencies": {
