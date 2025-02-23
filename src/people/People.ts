@@ -2,7 +2,7 @@ import { Occupation } from "./Occupation.js"
 import { Gender } from "@rr0/common"
 import { Level2Date as EdtfDate, Level2Duration as Duration } from "@rr0/time"
 import { RR0Data } from "../RR0Data"
-import { CountryCode } from "../org/country/CountryCode"
+import { CountryCode } from "../org/country/CountryCode.js"
 import { RR0Event } from "../event"
 import { StringUtil } from "../util/string/string"
 

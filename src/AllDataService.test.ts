@@ -17,19 +17,27 @@ describe("AllDataService", () => {
       const list = await dataService.getFromDir<People>(dirName, ["people", undefined], fileSpec)
       peopleList.push(...list)
     }
-    expect(peopleList.length).toBe(6)
-    const deforge = peopleList.find(people => people.title.includes("Deforge"))
-    const birthEvent = deforge.events.find(event => event.eventType === "birth")
-    expect(birthEvent.time.year.value).toBe(1940)
-    const deathEvent = deforge.events.find(event => event.eventType === "death")
-    expect(deathEvent.time.year.value).toBe(2025)
-    expect(deathEvent.time.month.value).toBe(1)
-    expect(deforge.occupations).toEqual([Occupation.ufologist, Occupation.teacher])
-    expect(deforge.countries).toEqual([CountryCode.fr])
-    expect(deforge.gender).toEqual(Gender.male)
-    expect(deforge.discredited).toEqual(false)
-    const carter = peopleList.find(people => people.lastName === "Carter")
-    expect(carter.qualifier).toBe("Junior")
+    expect(peopleList.length).toBe(7)
+    {
+      const deforge = peopleList.find(people => people.title.includes("Deforge"))
+      const birthEvent = deforge.events.find(event => event.eventType === "birth")
+      expect(birthEvent.time.year.value).toBe(1940)
+      const deathEvent = deforge.events.find(event => event.eventType === "death")
+      expect(deathEvent.time.year.value).toBe(2025)
+      expect(deathEvent.time.month.value).toBe(1)
+      expect(deforge.occupations).toEqual([Occupation.ufologist, Occupation.teacher])
+      expect(deforge.countries).toEqual([CountryCode.fr])
+      expect(deforge.gender).toEqual(Gender.male)
+      expect(deforge.discredited).toEqual(false)
+    }
+    {
+      const carter = peopleList.find(people => people.lastName === "Carter")
+      expect(carter.qualifier).toBe("Junior")
+    }
+    {
+      const carter = peopleList.find(people => people.lastName === "Altshuler")
+      expect(carter.firstNames).toEqual(["John", "Henry"])
+    }
   })
 
   test("org from file", async () => {

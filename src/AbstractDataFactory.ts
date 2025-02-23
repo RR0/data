@@ -28,7 +28,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   titleFromDirName(dirName: string): string {
     const title = StringUtil.camelToText(path.basename(dirName))
     const names = title.split(" ")
-    return names.length <= 1 ? title : names[0] + ", " + names.slice(1)
+    return names.length <= 1 ? title : names[0] + ", " + names.slice(1).join(" ")
   }
 
   parse(dataJson: J): T {

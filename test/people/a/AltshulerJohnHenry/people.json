@@ -1,0 +1,18 @@
+{
+  "occupations": [
+    "physician"
+  ],
+  "countries": [
+    "us"
+  ],
+  "events": [
+    {
+      "type": "birth",
+      "time": "1940"
+    },
+    {
+      "type": "death",
+      "time": "2004"
+    }
+  ]
+}
