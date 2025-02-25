@@ -8,6 +8,7 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
 
   constructor() {
     super(null, "event")
+    this.eventFactory = this
   }
 
   parse(eventJson: RR0EventJson): RR0Event {

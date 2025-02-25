@@ -54,7 +54,7 @@ export class AllDataService {
           throw new Error("No factory to handle " + dataFile)
         }
       } catch (e) {
-        console.warn(dirName, "has no", fileNames, "description")
+        console.warn(`Could not create data from ${file}`, e)
       }
     }
     return dataList
