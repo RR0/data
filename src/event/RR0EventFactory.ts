@@ -11,16 +11,25 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
   }
 
   parse(eventJson: RR0EventJson): RR0Event {
+    const data = super.parse(eventJson)
     const time = eventJson.time ? EdtfDate.fromString(eventJson.time) : undefined
     const eventType = eventJson.eventType || eventJson["type"]
-    const name = eventJson.name
-    const title = eventJson.title
-    const url = eventJson.url
     let placeJson = eventJson.place
     let place: Place | undefined
     if (typeof placeJson === "string") {
       place = new NamedPlace(placeJson)
     }
-    return {type: "event", eventType, time, name, title, url, place} as RR0Event
+    return {
+      id: data.id,
+      type: data.type,
+      eventType,
+      dirName: data.dirName,
+      name: data.name,
+      title: data.title,
+      url: data.url,
+      events: data.events,
+      time,
+      place
+    } as RR0Event
   }
 }

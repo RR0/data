@@ -42,6 +42,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
       id: dataJson.id,
       type: dataJson.type,
       dirName,
+      name: dataJson.name,
       title,
       url: dataJson.url,
       events: []
