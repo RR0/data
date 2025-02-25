@@ -1,13 +1,13 @@
 import { RR0Event } from "./RR0Event.js"
-import { AbstractDataFactory } from "../AbstractDataFactory"
 import { RR0EventJson } from "./RR0EventJson"
 import { NamedPlace, Place } from "@rr0/place"
 import { Level2Date as EdtfDate } from "@rr0/time"
+import { TypedDataFactory } from "../TypedDataFactory"
 
-export class RR0EventFactory extends AbstractDataFactory<RR0Event, RR0EventJson> {
+export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
 
   constructor() {
-    super(null)
+    super(null, "event")
   }
 
   parse(eventJson: RR0EventJson): RR0Event {
