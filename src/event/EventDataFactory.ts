@@ -10,8 +10,8 @@ import { Level2Date as EdtfDate } from "@rr0/time"
  */
 export class EventDataFactory<T extends RR0EventType = RR0EventType> extends TypedDataFactory<RR0Event, RR0EventJson> {
 
-  constructor(eventFactory: RR0EventFactory, readonly eventType: RR0EventType,
-              readonly fileNames: string[] = [eventType]) {
+  constructor(eventFactory: RR0EventFactory, readonly eventTypes: RR0EventType[],
+              readonly fileNames: string[] = eventTypes) {
     super(eventFactory, "event", fileNames)
   }
 
@@ -27,7 +27,7 @@ export class EventDataFactory<T extends RR0EventType = RR0EventType> extends Typ
   create(file: FileContents): RR0Event<T> | undefined {
     const event = super.create(file) as RR0Event<T>
     let eventData: RR0Event<T> | undefined
-    if (this.eventType === event?.eventType) {
+    if (this.eventTypes.includes(event?.eventType)) {
       eventData = event
     }
     return eventData

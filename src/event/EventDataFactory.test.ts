@@ -7,7 +7,7 @@ describe("EventDatafactory", () => {
 
   test("build people with no name", () => {
     const eventFactory = new RR0EventFactory()
-    const factory = new EventDataFactory(eventFactory, "sighting", ["index.json"])
+    const factory = new EventDataFactory(eventFactory, ["sighting"], ["index.json"])
     const lang = new FileContentsLang()
     lang.lang = ""
     lang.variants = []

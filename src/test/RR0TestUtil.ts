@@ -12,7 +12,7 @@ export class RR0TestUtil {
 
   constructor(readonly rootDir = "test") {
     const eventFactory = new RR0EventFactory()
-    const sightingFactory = new EventDataFactory(eventFactory, "sighting", ["index"])
+    const sightingFactory = new EventDataFactory(eventFactory, ["sighting"], ["index"])
     this.peopleFactory = new PeopleFactory(eventFactory)
     this.orgFactory = new OrganizationFactory(eventFactory)
     const bookFactory = new TypedDataFactory(eventFactory, "book")
