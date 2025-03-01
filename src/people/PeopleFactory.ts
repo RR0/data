@@ -1,9 +1,9 @@
 import { People } from "./People.js"
 import { PeopleJson } from "./PeopleJson.js"
-import { RR0EventFactory } from "../event"
-import { TypedDataFactory } from "../TypedDataFactory"
-import { Occupation } from "./Occupation"
-import { CountryCode } from "../org"
+import { RR0EventFactory } from "../event/RR0EventFactory.js"
+import { TypedDataFactory } from "../TypedDataFactory.js"
+import { Occupation } from "./Occupation.js"
+import { CountryCode } from "../org/country/CountryCode.js"
 import { Gender } from "@rr0/common"
 import * as assert from "node:assert"
 

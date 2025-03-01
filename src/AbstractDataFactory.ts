@@ -4,7 +4,7 @@ import { RR0Data } from "./RR0Data.js"
 import { RR0DataFactory } from "./RR0DataFactory.js"
 import { RR0DataJson } from "./RR0DataJson.js"
 import { RR0Event, RR0EventFactory, RR0EventJson } from "./event/index.js"
-import { StringUtil } from "./util/string/string"
+import { StringUtil } from "./util/string/StringUtil.js"
 
 export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJson> implements RR0DataFactory<T> {
 

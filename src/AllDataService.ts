@@ -1,8 +1,8 @@
-import { RR0Data } from "./RR0Data.js"
-import { TypedDataFactory } from "./TypedDataFactory.js"
 import { globSync } from "glob"
 import { FileContents } from "@javarome/fileutil"
-import { RR0DataJson } from "./RR0DataJson"
+import { RR0Data } from "./RR0Data.js"
+import { TypedDataFactory } from "./TypedDataFactory.js"
+import { RR0DataJson } from "./RR0DataJson.js"
 
 /**
  * Fetch RR0 data from JSON files.

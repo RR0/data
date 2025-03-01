@@ -1,4 +1,4 @@
-import { SourceJson } from "./source/index.js"
+import { SourceJson } from "./source/SourceJson.js"
 import { RR0EventJson } from "./event/RR0EventJson.js"
 
 /**

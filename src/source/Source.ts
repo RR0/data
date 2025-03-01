@@ -1,5 +1,6 @@
 import { Level2Date as EdtfDate } from "@rr0/time"
-import { RR0Data } from "../RR0Data"
+import { RR0Data } from "../RR0Data.js"
+import { RR0Event } from "../event"
 
 export type Publication = {
   /**
@@ -51,4 +52,9 @@ export interface Source extends RR0Data {
    * Chapter, page, etc.
    */
   index?: string
+
+  /**
+   * Events of the data.
+   */
+  events: RR0Event[]
 }

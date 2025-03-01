@@ -1,8 +1,8 @@
 import { RR0Event } from "./RR0Event.js"
-import { RR0EventJson } from "./RR0EventJson"
+import { RR0EventJson } from "./RR0EventJson.js"
 import { NamedPlace, Place } from "@rr0/place"
 import { Level2Date as EdtfDate } from "@rr0/time"
-import { TypedDataFactory } from "../TypedDataFactory"
+import { TypedDataFactory } from "../TypedDataFactory.js"
 
 export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
 

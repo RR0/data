@@ -1,9 +1,9 @@
 import path from "path"
+import { FileContents, findDirsContaining } from "@javarome/fileutil"
 import { RR0Data } from "./RR0Data.js"
 import { AbstractDataFactory } from "./AbstractDataFactory.js"
-import { RR0EventFactory } from "./event"
-import { FileContents, findDirsContaining } from "@javarome/fileutil"
-import { RR0DataJson, RR0DataType } from "./RR0DataJson"
+import { RR0EventFactory } from "./event/RR0EventFactory.js"
+import { RR0DataJson, RR0DataType } from "./RR0DataJson.js"
 
 /**
  * A RR0Data factory which can read either <someType>.json files of index.json with a "type": "<someType>" property.

@@ -1,7 +1,7 @@
 import { Place } from "@rr0/place"
-import { OrganizationKind } from "./OrganizationKind"
-import { RR0Data } from "../RR0Data"
-import { RR0Event } from "../event"
+import { OrganizationKind } from "./OrganizationKind.js"
+import { RR0Data } from "../RR0Data.js"
+import { RR0Event } from "../event/RR0Event.js"
 
 export class Organization implements RR0Data {
 

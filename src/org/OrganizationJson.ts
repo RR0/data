@@ -1,6 +1,6 @@
 import { Place } from "@rr0/place"
-import { RR0DataJson } from "../RR0DataJson"
-import { OrganizationKind } from "./OrganizationKind"
+import { RR0DataJson } from "../RR0DataJson.js"
+import { OrganizationKind } from "./OrganizationKind.js"
 
 export type OrganizationJson = RR0DataJson & {
 

@@ -1,6 +1,6 @@
-import { RR0Event } from "./event"
-import { Source } from "./source"
-import { RR0DataType } from "./RR0DataJson"
+import { RR0Event } from "./event/RR0Event.js"
+import { Source } from "./source/Source.js"
+import { RR0DataType } from "./RR0DataJson.js"
 
 /**
  * Any kind of data on RR0 (see implementing classes).
