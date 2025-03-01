@@ -17,7 +17,8 @@ describe("PeopleService", () => {
     path.join(rootDir, "c/CondonEdwardU"),
     hynekDir,
     vonBraunDir,
-    path.join("test/science/crypto/ufo/enquete/dossier", "Villa")
+    path.join("test/science/crypto/ufo/enquete/dossier", "Villa"),
+    path.join("test/science/crypto/ufo/enquete/dossier", "WaltonTravis")
   ]
   const service = new PeopleService(rr0TestUtil.dataService, rr0TestUtil.peopleFactory, {rootDir, files})
 
@@ -96,5 +97,10 @@ describe("PeopleService", () => {
     expect(service.getUrl("Beau", ["Jérôme"])).toBe(beauDir)
     expect(service.getUrl("Beau", ["Jérôme", "Pierre"])).toBe(path.join(rootDir, "b/BeauJeromePierre"))
     expect(service.getUrl("VonBraun", ["Werner"])).toBe(vonBraunDir)
+  })
+
+  test("get all", async () => {
+    const all = await service.getAll()
+    expect(all.length).toBe(5)
   })
 })

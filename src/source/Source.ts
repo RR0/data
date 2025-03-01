@@ -18,7 +18,7 @@ export type RR0SourceType = "book" | "article"
 /**
  * The origin of some RR0 data.
  */
-export class Source<T extends RR0SourceType> extends RR0Data<T> {
+export class Source<T extends RR0SourceType = RR0SourceType> extends RR0Data<T> {
   /**
    * Dependent sources.
    */

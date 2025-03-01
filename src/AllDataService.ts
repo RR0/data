@@ -51,7 +51,7 @@ export class AllDataService {
         if (data) {
           dataList.push(data as T)
         } else {
-          throw new Error("No factory to handle " + dataFile)
+          throw new Error("No factory to handle " + dataFile.name)
         }
       } catch (e) {
         console.warn(`Could not create data from ${file}`, e)

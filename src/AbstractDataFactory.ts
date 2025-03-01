@@ -66,12 +66,15 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
       imageJsonEvent.url = dataJson.image
     } else {
       let hasDefaultFile = false
-      for (const defaultImageFile of this.previewFileNames) {
-        hasDefaultFile = fs.existsSync(path.join(dataJson.dirName || "", defaultImageFile))
-        if (hasDefaultFile) {
-          imageJsonEvent.url = defaultImageFile
-          imageJsonEvent.name = dataJson.name   // In a default portrait image, label is parent's name
-          break
+      const dirName = dataJson.dirName
+      if (dirName) {
+        for (const defaultImageFile of this.previewFileNames) {
+          hasDefaultFile = fs.existsSync(path.join(dirName, defaultImageFile))
+          if (hasDefaultFile) {
+            imageJsonEvent.url = defaultImageFile
+            imageJsonEvent.name = dataJson.name   // In a default portrait image, label is parent's name
+            break
+          }
         }
       }
     }
