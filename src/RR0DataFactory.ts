@@ -1,5 +1,5 @@
 import { RR0Data } from "./RR0Data.js"
-import { RR0DataJson } from "./RR0DataJson"
+import { RR0DataJson } from "./RR0DataJson.js"
 
 /**
  * Instantiates RR0Data from (JSON) file contents.

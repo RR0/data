@@ -1,17 +1,13 @@
 import { Occupation } from "./Occupation.js"
 import { Gender } from "@rr0/common"
 import { Level2Date as EdtfDate, Level2Duration as Duration } from "@rr0/time"
-import { RR0Data } from "../RR0Data"
+import { RR0Data } from "../RR0Data.js"
 import { CountryCode } from "../org/country/CountryCode.js"
-import { RR0Event } from "../event"
-import { StringUtil } from "../util/string"
+import { RR0Event } from "../event/RR0Event.js"
+import { StringUtil } from "../util/string/StringUtil.js"
 
-export class People implements RR0Data {
+export class People extends RR0Data {
   readonly type = "people"
-
-  title: string
-
-  name: string
 
   /**
    * The people actually doesn't exist.
@@ -47,6 +43,7 @@ export class People implements RR0Data {
     readonly events: RR0Event[] = [],
     readonly qualifier?: string
   ) {
+    super()
     this.lastAndFirstName = this.getLastAndFirstName()
     this.title = this.firstAndLastName
     this.name = this.lastName

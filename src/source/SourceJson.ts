@@ -1,4 +1,4 @@
-import { RR0DataJson } from "../RR0DataJson"
+import { RR0DataJson } from "../RR0DataJson.js"
 
 export type PublicationJson = {
   /**

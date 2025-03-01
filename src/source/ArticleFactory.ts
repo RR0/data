@@ -1,7 +1,7 @@
 import { Article } from "./Article.js"
 import { RR0EventFactory } from "../event/RR0EventFactory.js"
 import { TypedDataFactory } from "../TypedDataFactory.js"
-import { RR0DataJson } from "../RR0DataJson"
+import { RR0DataJson } from "../RR0DataJson.js"
 
 export type ArticleDataJson = RR0DataJson
 

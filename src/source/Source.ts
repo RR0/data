@@ -1,6 +1,5 @@
 import { Level2Date as EdtfDate } from "@rr0/time"
 import { RR0Data } from "../RR0Data.js"
-import { RR0Event } from "../event"
 
 export type Publication = {
   /**
@@ -14,10 +13,12 @@ export type Publication = {
   time: EdtfDate | undefined
 }
 
+export type RR0SourceType = "book" | "article"
+
 /**
  * The origin of some RR0 data.
  */
-export class Source extends RR0Data {
+export class Source<T extends RR0SourceType> extends RR0Data<T> {
   /**
    * Dependent sources.
    */
@@ -53,8 +54,7 @@ export class Source extends RR0Data {
    */
   index?: string
 
-  /**
-   * Events of the data.
-   */
-  events: RR0Event[]
+  constructor(type: T) {
+    super(type)
+  }
 }

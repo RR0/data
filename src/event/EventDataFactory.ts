@@ -1,4 +1,4 @@
-import { RR0Event, RR0EventFactory, RR0EventJson } from "./index"
+import { RR0Event, RR0EventFactory, RR0EventJson } from "./index.js"
 import { FileContents } from "@javarome/fileutil"
 import { TypedDataFactory } from "../TypedDataFactory.js"
 import { RR0EventType } from "./RR0EventType.js"
@@ -20,7 +20,7 @@ export class EventDataFactory<T extends RR0EventType = RR0EventType> extends Typ
     const data = super.parse(dataJson)
     data.eventType = dataJson.eventType
     data.time = EdtfDate.fromString(dataJson.time)
-    data.place = new NamedPlace(dataJson.place)
+    data.place = new NamedPlace(dataJson.place) as any
     return data
   }
 

@@ -1,11 +1,17 @@
 import { RR0Event } from "./event/RR0Event.js"
-import { Source } from "./source/Source.js"
+import { RR0SourceType, Source } from "./source/Source.js"
 import { RR0DataType } from "./RR0DataJson.js"
 
 /**
  * Any kind of data on RR0 (see implementing classes).
  */
 export class RR0Data<T = RR0DataType> {
+
+  /**
+   * External data from which this data was devised.
+   */
+  sources?: Source<RR0SourceType>[]
+
   /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory
@@ -27,11 +33,6 @@ export class RR0Data<T = RR0DataType> {
    * Events of the data.
    */
   events: RR0Event[]
-
-  /**
-   * The data type
-   */
-  type?: T
 
   /**
    * Parent data.
@@ -64,10 +65,13 @@ export class RR0Data<T = RR0DataType> {
    */
   description?: string
 
-  /**
-   * External data from which this data was devised.
-   */
-  sources?: Source[]
+  constructor(
+    /**
+     * The data type
+     */
+    readonly type?: T
+  ) {
+  }
 
   /**
    *

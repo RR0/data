@@ -18,7 +18,7 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
     let placeJson = eventJson.place
     let place: Place | undefined
     if (typeof placeJson === "string") {
-      place = new NamedPlace(placeJson)
+      place = new NamedPlace(placeJson) as any
     }
     return {
       id: data.id,

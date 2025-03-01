@@ -1,5 +1,5 @@
-import { RR0DataJson } from "../RR0DataJson"
-import { RR0EventType } from "./RR0EventType"
+import { RR0DataJson } from "../RR0DataJson.js"
+import { RR0EventType } from "./RR0EventType.js"
 
 export type RR0EventJson = RR0DataJson & {
   type: "event"

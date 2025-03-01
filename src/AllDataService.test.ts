@@ -1,9 +1,9 @@
 import { describe, expect, test } from "@javarome/testscript"
-import { AllDataService } from "./AllDataService"
-import { Occupation, People } from "./people"
-import { CountryCode, Organization } from "./org"
+import { AllDataService } from "./AllDataService.js"
+import { Occupation, People } from "./people/index.js"
+import { CountryCode, Organization } from "./org/index.js"
 import { Gender } from "@rr0/common"
-import { rr0TestUtil } from "./test"
+import { rr0TestUtil } from "./test/index.js"
 
 describe("AllDataService", () => {
 

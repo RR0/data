@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@javarome/testscript"
-import { EventDataFactory } from "./EventDataFactory"
-import { RR0EventFactory } from "./RR0EventFactory"
+import { EventDataFactory } from "./EventDataFactory.js"
+import { RR0EventFactory } from "./RR0EventFactory.js"
 import { FileContents, FileContentsLang } from "@javarome/fileutil"
 
 describe("EventDatafactory", () => {

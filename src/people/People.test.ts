@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@javarome/testscript"
 import { Level2Date as EdtfDate } from "@rr0/time"
-import { People } from "./People"
+import { People } from "./People.js"
 
 describe("People", () => {
 

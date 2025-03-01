@@ -4,7 +4,7 @@ import { PeopleFactory } from "./PeopleFactory.js"
 import { PeopleJson } from "./PeopleJson.js"
 import { AbstractDataService } from "../AbstractDataService.js"
 import { AllDataService } from "../AllDataService.js"
-import { StringUtil } from "../util/string"
+import { StringUtil } from "../util/string/StringUtil.js"
 
 export interface PeopleServiceConfig {
   rootDir: string

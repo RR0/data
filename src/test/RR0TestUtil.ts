@@ -1,8 +1,8 @@
 import { PeopleFactory } from "../people/index.js"
-import { AllDataService } from "../AllDataService"
-import { EventDataFactory, RR0EventFactory } from "../event"
-import { TypedDataFactory } from "../TypedDataFactory"
-import { OrganizationFactory } from "../org"
+import { AllDataService } from "../AllDataService.js"
+import { EventDataFactory, RR0EventFactory } from "../event/index.js"
+import { TypedDataFactory } from "../TypedDataFactory.js"
+import { OrganizationFactory } from "../org/OrganizationFactory.js"
 
 export class RR0TestUtil {
 

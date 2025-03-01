@@ -1,6 +1,8 @@
 import { Source } from "./Source.js"
 
-export class Article extends Source {
+export class Article extends Source<"article"> {
 
-  type: "article"
+  constructor() {
+    super("article")
+  }
 }
