@@ -5,7 +5,7 @@ import { RR0DataType } from "./RR0DataJson.js"
 /**
  * Any kind of data on RR0 (see implementing classes).
  */
-export interface RR0Data<T = RR0DataType> {
+export class RR0Data<T = RR0DataType> {
   /**
    * A unique identifier for this data.
    * // TODO: Make it mandatory

@@ -17,7 +17,7 @@ export type Publication = {
 /**
  * The origin of some RR0 data.
  */
-export interface Source extends RR0Data {
+export class Source extends RR0Data {
   /**
    * Dependent sources.
    */

@@ -1,6 +1,6 @@
 import { Source } from "./Source.js"
 
-export interface Article extends Source {
+export class Article extends Source {
 
   type: "article"
 }
