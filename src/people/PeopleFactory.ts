@@ -66,9 +66,14 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const discredited = json.discredited || false
     const gender = Gender[json.gender] || Gender.male
     json.name = json.name || lastName || firstNames[0] || pseudonyms[0] || ""
-    return new People(firstNames, lastName, pseudonyms, occupations, countries,
+    const people = new People(firstNames, lastName, pseudonyms, occupations, countries,
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
       qualifier)
+    const jsonTitle = json.title
+    if (jsonTitle) {
+      people.title = jsonTitle
+    }
+    return people
   }
 
   protected createTitle(json: PeopleJson): string {
