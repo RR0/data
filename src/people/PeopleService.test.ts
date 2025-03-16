@@ -43,7 +43,7 @@ describe("PeopleService", () => {
 
   test("build people with two last names", () => {
     const people = service.createFromTitle("Werner VonBraun")
-    expect(people.title).toBe("Werner VonBraun")
+    expect(people.title).toBe("Werner Von Braun")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Von Braun")
     expect(people.firstNames).toEqual(["Werner"])
@@ -69,7 +69,7 @@ describe("PeopleService", () => {
 
   test("build people with last name first", () => {
     const people = service.createFromTitle("Hynek, Josef Allen")
-    expect(people.title).toBe("Hynek, Josef Allen")
+    expect(people.title).toBe("Josef Allen Hynek")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Hynek")
     expect(people.firstNames).toEqual(["Josef", "Allen"])

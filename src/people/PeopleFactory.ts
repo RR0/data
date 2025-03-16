@@ -69,9 +69,8 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const people = new People(firstNames, lastName, pseudonyms, occupations, countries,
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
       qualifier)
-    const jsonTitle = json.title
-    if (jsonTitle) {
-      people.title = jsonTitle
+    if (!people.title) {
+      people.title = title
     }
     return people
   }

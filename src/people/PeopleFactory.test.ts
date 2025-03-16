@@ -27,6 +27,7 @@ describe("PeopleFactory", () => {
     const expected = new People(undefined, undefined, ["Paul Villa"], [Occupation.contactee, Occupation.mechanic],
       [CountryCode.us], json.discredited, Gender[json.gender], json.id, json.dirName, json.image, json.url, [],
       json.qualifier)
+    expected.title = "Paul Villa"
     const events = factory.parseEvents(factory.defaultJsonEvents(json), expected)
     Object.assign(expected, {events})
     expect(expected.events.length).toBe(2)
