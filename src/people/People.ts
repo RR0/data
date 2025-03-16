@@ -36,12 +36,12 @@ export class People extends RR0Data {
      * @deprecated Use a "birth"-typed sub-data instead.
      */
     readonly gender = Gender.male,
-    readonly id = lastName + firstNames.join(""),
+    readonly id = StringUtil.textToCamel(lastName) + firstNames.join(""),
     readonly dirName: string = "",
     public image?: string,
     readonly url?: string,
     readonly events: RR0Event[] = [],
-    readonly qualifier?: string
+    readonly qualifier = ""
   ) {
     super()
     this.lastAndFirstName = this.getLastAndFirstName()

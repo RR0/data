@@ -65,6 +65,11 @@ export type RR0DataJson = {
   surname?: string
 
   /**
+   * ex: "senior", "junior", "II"
+   */
+  qualifier?: string
+
+  /**
    * Long name
    */
   title?: string

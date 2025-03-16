@@ -32,7 +32,7 @@ export class RR0Data<T = RR0DataType> {
   /**
    * Events of the data.
    */
-  events: RR0Event[]
+  events: RR0Event[] = []
 
   /**
    * Parent data.

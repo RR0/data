@@ -20,17 +20,15 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
     if (typeof placeJson === "string") {
       place = new NamedPlace(placeJson) as any
     }
-    return {
+    const event = new RR0Event(eventType, time)
+    Object.assign(event, {
       id: data.id,
-      type: data.type,
-      eventType,
       dirName: data.dirName,
       name: data.name,
       title: data.title,
       url: data.url,
-      events: data.events,
-      time,
       place
-    } as RR0Event
+    })
+    return event as RR0Event
   }
 }

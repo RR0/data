@@ -21,7 +21,7 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
   }
 
   getUrl(lastName: string, firstNames: string[]): string {
-    const normalizedLastName = StringUtil.removeAccents(lastName)
+    const normalizedLastName = StringUtil.textToCamel(lastName)
     const normalizedFirstNames = firstNames.map(StringUtil.removeAccents).map(StringUtil.withoutDots)
     const firstLetter = (normalizedLastName + normalizedFirstNames.join("")).charAt(0).toLowerCase()
     return path.join(this.config.rootDir,
@@ -29,19 +29,27 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
   }
 
   createFromTitle(title: string): People {
-    const {lastName, firstNames} = this.peopleFactory.namesFromTitle(title)
-    const dirName: string | undefined = this.dirNameFromNames(lastName, firstNames)
+    const {lastName, firstNames, qualifier} = this.peopleFactory.namesFromTitle(title)
+    const key = this.cacheKey(lastName, title)
+    const dirName: string | undefined = lastName ? this.dirNameFromNames(lastName, firstNames, title) : this.getUrl(
+      StringUtil.textToCamel(title), [])
     const created = this.peopleFactory.parse({title, firstNames, lastName, dirName})
+    created.title = title
     if (this.files.indexOf(dirName) < 0) {
       console.warn(`Could not find dirName "${dirName}" in PeopleService files; clearing dirName`)
       Object.assign(created, {dirName: undefined})
     }
-    this.cache.set(lastName, created)
+    this.cache.set(key, created)
     return created
   }
 
-  protected dirNameFromNames(lastName: string, firstNames: string[]) {
-    return this.cache.get(lastName.toLowerCase())?.dirName || this.getUrl(lastName, firstNames)
+  protected cacheKey(lastName: string, title: string): string {
+    const titleKey = StringUtil.textToCamel(title)
+    return StringUtil.textToCamel(lastName) || titleKey
+  }
+
+  protected dirNameFromNames(lastName: string, firstNames: string[], title: string) {
+    return this.cache.get(this.cacheKey(lastName, title))?.dirName || this.getUrl(lastName, firstNames)
   }
 
   async getAll(): Promise<People[]> {

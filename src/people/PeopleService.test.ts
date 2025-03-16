@@ -36,16 +36,16 @@ describe("PeopleService", () => {
     expect(people.firstNames).toEqual(["Jérôme", "Pierre"])
     expect(people.hoax).toBe(false)
     expect(people.discredited).toBe(false)
-    expect(people.dirName).toBeUndefined()  // Not "people/b/BeauJeromePierre" because the file doesn't exist
+    expect(people.dirName).toBe("test/people/b/BeauJerome")
     expect(people.occupations).toEqual([])
     expect(people.pseudonyms).toEqual([])
   })
 
   test("build people with two last names", () => {
     const people = service.createFromTitle("Werner VonBraun")
-    expect(people.title).toBe("Werner Von Braun")
+    expect(people.title).toBe("Werner VonBraun")
     expect(people.countries).toEqual([])
-    expect(people.lastName).toBe("VonBraun")
+    expect(people.lastName).toBe("Von Braun")
     expect(people.firstNames).toEqual(["Werner"])
     expect(people.hoax).toBe(false)
     expect(people.discredited).toBe(false)
@@ -69,7 +69,7 @@ describe("PeopleService", () => {
 
   test("build people with last name first", () => {
     const people = service.createFromTitle("Hynek, Josef Allen")
-    expect(people.title).toBe("Josef Allen Hynek")
+    expect(people.title).toBe("Hynek, Josef Allen")
     expect(people.countries).toEqual([])
     expect(people.lastName).toBe("Hynek")
     expect(people.firstNames).toEqual(["Josef", "Allen"])
@@ -84,7 +84,7 @@ describe("PeopleService", () => {
     const people = service.createFromTitle("Aristote")
     expect(people.title).toBe("Aristote")
     expect(people.countries).toEqual([])
-    expect(people.firstNames[0]).toBe("Aristote")
+    expect(people.firstNames).toEqual([])
     expect(people.lastName).toEqual("")
     expect(people.hoax).toBe(false)
     expect(people.discredited).toBe(false)

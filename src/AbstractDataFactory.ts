@@ -20,28 +20,13 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   ) {
   }
 
-  /**
-   * Determine people name from directory name.
-   *
-   * @param dirName
-   */
-  titleFromDirName(dirName: string): string {
-    const title = StringUtil.camelToText(path.basename(dirName))
-    const names = title.split(" ")
-    return names.length <= 1 ? title : names[0] + ", " + names.slice(1).join(" ")
-  }
-
   parse(dataJson: J): T {
-    let title = dataJson.title
-    let dirName = dataJson.dirName
-    if (!title && dirName) {
-      title = this.titleFromDirName(dirName)
-    }
-    const jsonEvents = this.getDefaultEvents(dataJson)
+    const title = this.createTitle(dataJson)
+    const jsonEvents = this.defaultJsonEvents(dataJson)
     const data: RR0Data = {
       id: dataJson.id,
       type: dataJson.type,
-      dirName,
+      dirName: dataJson.dirName,
       name: dataJson.name,
       title,
       url: dataJson.url,
@@ -51,7 +36,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     return data as T
   }
 
-  getDefaultEvents(dataJson: J) {
+  defaultJsonEvents(dataJson: J) {
     const jsonEvents = dataJson.events || []
     const birthTime = dataJson.birthTime
     if (birthTime) {
@@ -87,15 +72,35 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
   parseEvents(jsonEvents: RR0EventJson[] = [], defaultParent: RR0Data): RR0Event[] {
     const events: RR0Event[] = []
     for (const eventJson of jsonEvents) {
-      const event = this.eventFactory.parse(eventJson)
-      switch (event.eventType) {
-        case "image":
-          event.name = event.name || defaultParent?.name || "<unknown name>"
-          event.title = event.title || defaultParent?.title || "<unknown title>"
-          break
-      }
+      const event = this.parseEvent(eventJson, defaultParent)
       events.push(event)
     }
     return events
+  }
+
+  /**
+   * Determine people name from directory name.
+   *
+   * @param dataJson
+   */
+  protected createTitle(dataJson: J): string {
+    let title = dataJson.title
+    if (!title && dataJson.dirName) {
+      title = StringUtil.camelToText(path.basename(dataJson.dirName))
+      const names = title.split(" ")
+      title = names.length <= 1 ? title : `${names[0]}, ${names.slice(1).join(" ")}`
+    }
+    return title
+  }
+
+  protected parseEvent(eventJson: RR0EventJson, defaultParent: RR0Data) {
+    const event = this.eventFactory.parse(eventJson)
+    switch (event.eventType) {
+      case "image":
+        event.name = event.name || defaultParent?.name || "<unknown name>"
+        event.title = event.title || defaultParent?.title || "<unknown title>"
+        break
+    }
+    return event
   }
 }

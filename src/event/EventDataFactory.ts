@@ -18,9 +18,11 @@ export class EventDataFactory<T extends RR0EventType = RR0EventType> extends Typ
 
   parse(dataJson: RR0EventJson): RR0Event {
     const data = super.parse(dataJson)
-    data.eventType = dataJson.eventType
-    data.time = EdtfDate.fromString(dataJson.time)
-    data.place = new NamedPlace(dataJson.place) as any
+    Object.assign(data, {
+      eventType: dataJson.eventType,
+      time: EdtfDate.fromString(dataJson.time),
+      place: new NamedPlace(dataJson.place)
+    })
     return data
   }
 

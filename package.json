@@ -2,7 +2,7 @@
   "name": "@rr0/data",
   "type": "module",
   "author": "Jérôme Beau <rr0@rr0.org> (https://rr0.org)",
-  "version": "0.3.23",
+  "version": "0.3.24",
   "description": "RR0 data model",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "rm -Rf dist && tsc --project tsconfig.prod.json",
     "prepublishOnly": "npm run build && npm test",
     "test": "testscript",
-    "test-one": "testscript src/event/EventDataFactory.test.ts",
+    "test-one": "testscript src/people/PeopleFactory.test.ts",
     "test-ci": "rm -Rf out && testscript"
   },
   "dependencies": {
@@ -32,8 +32,8 @@
     "@javarome/fileutil": "^0.3.7"
   },
   "devDependencies": {
-    "typescript": "5.7.3",
-    "@types/node": "^22.13.5",
+    "typescript": "5.8.2",
+    "@types/node": "^22.13.10",
     "tsx": "4.19.3",
     "@javarome/testscript": "^0.13.1"
   },

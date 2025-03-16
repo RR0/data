@@ -5,6 +5,9 @@ import { PeopleJson } from "./PeopleJson.js"
 import { People } from "./People.js"
 import { Occupation } from "./Occupation.js"
 import { CountryCode } from "../org/country/CountryCode.js"
+import { Gender } from "@rr0/common"
+import { RR0Event } from "../event/index.js"
+import { Level2Date as EdtfDate } from "@rr0/time"
 
 describe("PeopleFactory", () => {
 
@@ -22,8 +25,9 @@ describe("PeopleFactory", () => {
       "pseudonyms": ["Paul Villa"]
     }
     const expected = new People(undefined, undefined, ["Paul Villa"], [Occupation.contactee, Occupation.mechanic],
-      [CountryCode.us])
-    const events = factory.parseEvents(factory.getDefaultEvents(json), expected)
+      [CountryCode.us], json.discredited, Gender[json.gender], json.id, json.dirName, json.image, json.url, [],
+      json.qualifier)
+    const events = factory.parseEvents(factory.defaultJsonEvents(json), expected)
     Object.assign(expected, {events})
     expect(expected.events.length).toBe(2)
     const parsed = factory.parse(json)
@@ -35,5 +39,39 @@ describe("PeopleFactory", () => {
     const expected = new People(["Jérôme"], "Beau")
     const parsed = factory.parse(json)
     expect(parsed).toEqual(expected)
+  })
+
+  test("build people with multiple first names", () => {
+    const json: PeopleJson = {
+      dirName: "people/m/MellonChris",
+      lastName: "Mellon",
+      firstNames: [
+        "Christopher",
+        "K."
+      ],
+      url: "https://www.christophermellon.net",
+      occupations: [
+        "writer",
+        "ufologist",
+        "politician"
+      ],
+      countries: [
+        "us"
+      ],
+      events: [
+        {
+          type: "event",
+          eventType: "birth",
+          time: "1957-10-02"
+        }
+      ]
+    }
+    const expected = new People(json.firstNames, json.lastName, json.pseudonyms,
+      [Occupation.writer, Occupation.ufologist, Occupation.politician], [CountryCode.us],
+      json.discredited, Gender.male, json.id, json.dirName, json.image, json.url,
+      [new RR0Event("birth", EdtfDate.fromString("1957-10-02"))], json.qualifier)
+    const parsed = factory.parse(json)
+    expect(parsed).toEqual(expected)
+    expect(parsed.title).toEqual("Christopher K. Mellon")
   })
 })
