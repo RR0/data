@@ -38,3 +38,7 @@ export type RR0EventType =
    * Do new occupation
    */
   | "occupation"
+  /**
+   * Mariage
+   */
+  | "union"
