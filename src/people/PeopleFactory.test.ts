@@ -75,4 +75,19 @@ describe("PeopleFactory", () => {
     expect(parsed).toEqual(expected)
     expect(parsed.title).toEqual("Christopher K. Mellon")
   })
+
+  test("build people with a composed first name", () => {
+    const json: PeopleJson = {
+      dirName: "people/v/VertongenJeanLuc",
+      lastName: "Vertongen",
+      firstNames: ["Jean-Luc"]
+    }
+    const expected = new People(json.firstNames, json.lastName, json.pseudonyms,
+      [], [],
+      json.discredited, Gender.male, json.id, json.dirName, json.image, json.url,
+      [], json.qualifier)
+    const parsed = factory.parse(json)
+    expect(parsed).toEqual(expected)
+    expect(parsed.title).toEqual("Jean-Luc Vertongen")
+  })
 })

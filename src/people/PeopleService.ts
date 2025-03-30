@@ -22,7 +22,7 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
 
   getUrl(lastName: string, firstNames: string[]): string {
     const normalizedLastName = StringUtil.textToCamel(lastName)
-    const normalizedFirstNames = firstNames.map(StringUtil.removeAccents).map(StringUtil.withoutDots)
+    const normalizedFirstNames = firstNames.map(StringUtil.textToCamel)
     const firstLetter = (normalizedLastName + normalizedFirstNames.join("")).charAt(0).toLowerCase()
     return path.join(this.config.rootDir,
       `${firstLetter}/${normalizedLastName}${normalizedFirstNames.join("")}`)
@@ -48,7 +48,8 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
   }
 
   protected dirNameFromNames(lastName: string, firstNames: string[], title: string) {
-    return this.cache.get(this.cacheKey(lastName, title))?.dirName || this.getUrl(lastName, firstNames)
+    const cacheKey = this.cacheKey(lastName, title)
+    return this.cache.get(cacheKey)?.dirName || this.getUrl(lastName, firstNames)
   }
 
   async getAll(): Promise<People[]> {

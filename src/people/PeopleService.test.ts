@@ -11,12 +11,14 @@ describe("PeopleService", () => {
   const beauDir = path.join(rootDir, "b/BeauJerome")
   const aristoteDir = path.join(rootDir, "a/Aristote")
   const vonBraunDir = path.join(rootDir, "v/VonBraunWerner")
+  const vertongenDir = path.join(rootDir, "v/VertongenJeanLuc")
   const files = [
     aristoteDir,
     beauDir,
     path.join(rootDir, "c/CondonEdwardU"),
     hynekDir,
     vonBraunDir,
+    vertongenDir,
     path.join("test/science/crypto/ufo/enquete/dossier", "Villa"),
     path.join("test/science/crypto/ufo/enquete/dossier", "WaltonTravis")
   ]
@@ -67,6 +69,19 @@ describe("PeopleService", () => {
     expect(people.pseudonyms).toEqual([])
   })
 
+  test("build people with one composite first-name", () => {
+    const people = service.createFromTitle("Jean-Luc Vertongen")
+    expect(people.title).toBe("Jean-Luc Vertongen")
+    expect(people.countries).toEqual([])
+    expect(people.lastName).toBe("Vertongen")
+    expect(people.firstNames).toEqual(["Jean-Luc"])
+    expect(people.hoax).toBe(false)
+    expect(people.discredited).toBe(false)
+    expect(people.dirName).toBe(path.join(rootDir, "v/VertongenJeanLuc"))
+    expect(people.occupations).toEqual([])
+    expect(people.pseudonyms).toEqual([])
+  })
+
   test("build people with last name first", () => {
     const people = service.createFromTitle("Hynek, Josef Allen")
     expect(people.title).toBe("Josef Allen Hynek")
@@ -101,6 +116,6 @@ describe("PeopleService", () => {
 
   test("get all", async () => {
     const all = await service.getAll()
-    expect(all.length).toBe(5)
+    expect(all.length).toBe(6)
   })
 })

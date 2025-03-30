@@ -8,15 +8,19 @@ export class StringUtil {
     return str.replace(".", "")
   }
 
-  static removeAccents(str: string): string {
+  static withoutPunctuation(str: string): string {
+    return str.replace(/[ .:;,()\-+=*/#°@$€£%!&?"'’]/g, "")
+  }
+
+  static withoutAccents(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
 
   static textToCamel(text: string): string {
-    return StringUtil.removeAccents(text.trim()
+    return StringUtil.withoutAccents(StringUtil.withoutPunctuation(text.trim()
       .replace(/ [^ ]+/g,
         (substring: string, args: string[]) => substring.charAt(1).toUpperCase() + substring.substring(2)))
-      .replace(/[ .:;,()\-+=*/#°@$€£%!&?"'’]/g, "")
+    )
   }
 
   static camelToText(camel: string): string {

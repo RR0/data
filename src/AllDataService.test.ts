@@ -17,7 +17,7 @@ describe("AllDataService", () => {
       const list = await dataService.getFromDir<People>(dirName, ["people", undefined], fileSpec)
       peopleList.push(...list)
     }
-    expect(peopleList.length).toBe(9)
+    expect(peopleList.length).toBe(10)
     {
       const deforge = peopleList.find(people => people.title.includes("Deforge"))
       const birthEvent = deforge.events.find(event => event.eventType === "birth")
