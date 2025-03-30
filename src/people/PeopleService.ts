@@ -51,28 +51,4 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
     const cacheKey = this.cacheKey(lastName, title)
     return this.cache.get(cacheKey)?.dirName || this.getUrl(lastName, firstNames)
   }
-
-  async getAll(): Promise<People[]> {
-    return this.getFromDirs(this.files)
-  }
-
-  async getFromDirs(dirNames: string[]): Promise<People[]> {
-    let peopleList: People[] = []
-    for (const dirName of dirNames) {
-      const list = await this.getFromDir(dirName)
-      peopleList.push(...list)
-    }
-    return peopleList
-  }
-
-  /**
-   * Get people information found in a directory.
-   *
-   * @param dirName
-   * @return {People[]} The found people information.
-   */
-  async getFromDir(dirName: string): Promise<People[]> {
-    const fileSpec = ["people*.json"]
-    return this.dataService.getFromDir<People>(dirName, ["people", undefined], fileSpec)
-  }
 }
