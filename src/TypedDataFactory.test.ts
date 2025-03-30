@@ -22,7 +22,7 @@ describe("TypedDataFactory", () => {
     test("with events", () => {
       const filePath = path.resolve(peopleFiles[0], "people.json")
       const dataFile = FileContents.read(filePath, "utf-8")
-      const data = factory.create(dataFile)
+      const data = factory.createFromFile(dataFile)
       const events = data.events
       expect(events.length).toBe(3)
       const birth = events.find(event => event.eventType === "birth")
@@ -39,7 +39,7 @@ describe("TypedDataFactory", () => {
     test("create from file without events", () => {
       const filePath = path.resolve(peopleFiles[1], "people.json")
       const dataFile = FileContents.read(filePath, "utf-8")
-      const data = factory.create(dataFile)
+      const data = factory.createFromFile(dataFile)
       const events = data.events
       expect(events.length).toBe(3)
       const birth = events.find(event => event.eventType === "birth")

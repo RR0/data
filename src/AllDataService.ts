@@ -43,7 +43,7 @@ export class AllDataService {
         for (let i = 0; !data && i < this.factories.length; i++) {
           const factory = this.factories[i]
           try {
-            data = factory.create(dataFile)
+            data = factory.createFromFile(dataFile)
           } catch (e) {
             console.warn("Could not create a", factory.type, "from", dataFile, "because of", e)
           }

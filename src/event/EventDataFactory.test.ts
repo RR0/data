@@ -35,7 +35,7 @@ describe("EventDatafactory", () => {
   ]
 }
 `, new Date("2025-02-22T22:22:07.720Z"), lang)
-    const event = factory.create(file)
+    const event = factory.createFromFile(file)
     expect(event.eventType).toEqual("sighting")
     const imageEvent = event.events.find(e => e.eventType === "image")
     expect(imageEvent.url).toEqual("saturne-jupiter.jpg")

@@ -26,8 +26,8 @@ export class EventDataFactory<T extends RR0EventType = RR0EventType> extends Typ
     return data
   }
 
-  create(file: FileContents): RR0Event<T> | undefined {
-    const event = super.create(file) as RR0Event<T>
+  createFromFile(file: FileContents): RR0Event<T> | undefined {
+    const event = super.createFromFile(file) as RR0Event<T>
     let eventData: RR0Event<T> | undefined
     if (this.eventTypes.includes(event?.eventType)) {
       eventData = event

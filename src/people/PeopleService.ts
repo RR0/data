@@ -2,22 +2,15 @@ import path from "path"
 import { People } from "./People.js"
 import { PeopleFactory } from "./PeopleFactory.js"
 import { PeopleJson } from "./PeopleJson.js"
-import { AbstractDataService } from "../AbstractDataService.js"
+import { AbstractDataService, DataServiceConfig } from "../AbstractDataService.js"
 import { AllDataService } from "../AllDataService.js"
 import { StringUtil } from "../util/string/StringUtil.js"
 
-export interface PeopleServiceConfig {
-  rootDir: string
-  files: string[]
-}
 
 export class PeopleService extends AbstractDataService<People, PeopleJson> {
 
-  readonly cache = new Map<string, People>()
-
-  constructor(dataService: AllDataService, protected peopleFactory: PeopleFactory,
-              protected config: PeopleServiceConfig) {
-    super(dataService, peopleFactory, config.files)
+  constructor(dataService: AllDataService, factory: PeopleFactory, protected config: DataServiceConfig) {
+    super(dataService, factory, config.files)
   }
 
   getUrl(lastName: string, firstNames: string[]): string {
@@ -29,11 +22,12 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
   }
 
   createFromTitle(title: string): People {
-    const {lastName, firstNames, qualifier} = this.peopleFactory.namesFromTitle(title)
+    const peopleFactory = this.factory as PeopleFactory
+    const {lastName, firstNames, qualifier} = peopleFactory.namesFromTitle(title)
     const key = this.cacheKey(lastName, title)
     const dirName: string | undefined = lastName ? this.dirNameFromNames(lastName, firstNames, title) : this.getUrl(
       StringUtil.textToCamel(title), [])
-    const created = this.peopleFactory.parse({title, firstNames, lastName, dirName})
+    const created = peopleFactory.parse({title, firstNames, lastName, dirName})
     if (this.files.indexOf(dirName) < 0) {
       console.warn(`Could not find dirName "${dirName}" in PeopleService files; clearing dirName`)
       Object.assign(created, {dirName: undefined})

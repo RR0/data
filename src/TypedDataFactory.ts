@@ -14,7 +14,7 @@ export class TypedDataFactory<T extends RR0Data, J extends RR0DataJson> extends 
     super(eventFactory)
   }
 
-  create(file: FileContents): T | undefined {
+  createFromFile(file: FileContents): T | undefined {
     const dataJson = JSON.parse(file.contents) as J
     const basename = path.basename(file.name)
     if (!dataJson.type) {  // Guess type fromfile name
