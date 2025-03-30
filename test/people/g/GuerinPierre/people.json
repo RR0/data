@@ -1,0 +1,41 @@
+{
+  "lastName": "Guérin",
+  "firstNames": [
+    "Pierre"
+  ],
+  "occupations": [
+    "ufologist",
+    "astronomer"
+  ],
+  "countries": [
+    "fr"
+  ],
+  "pseudonyms": [
+    "Lemaître, Jacques"
+  ],
+  "events": [
+    {
+      "type": "birth",
+      "time": "1925-12-08",
+      "place": "La Rochelle (Charente-Maritime)",
+      "sources": [
+        {
+          "url": "https://avis-deces.linternaute.com/nom/famille-guerin?page=230"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "url": "/time/2/0/0/0/02/GuerinPierre.jpg",
+      "time": "2000-02"
+    },
+    {
+      "type": "death",
+      "time": "2000-10-07",
+      "place": "Créteil (Val-de-Marne)",
+      "notes": [
+        "d'une infection suite à une première séance de traitement contre un cancer."
+      ]
+    }
+  ]
+}
