@@ -10,7 +10,7 @@ export type Publication = {
   /**
    * When the publication occurred.
    */
-  time: EdtfDate | undefined
+  time?: EdtfDate | undefined
 }
 
 export type RR0SourceType = "book" | "article"
