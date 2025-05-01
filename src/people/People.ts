@@ -36,17 +36,24 @@ export class People extends RR0Data {
      * @deprecated Use a "birth"-typed sub-data instead.
      */
     readonly gender = Gender.male,
-    readonly id = StringUtil.textToCamel(lastName) + firstNames.join(""),
-    readonly dirName: string = "",
-    public image?: string,
-    readonly url?: string,
-    readonly events: RR0Event[] = [],
-    readonly qualifier = ""
+    id = StringUtil.textToCamel(lastName) + firstNames.join(""),
+    dirName: string = "",
+    image?: string,
+    url?: string,
+    events: RR0Event[] = [],
+    readonly qualifier = "",
+    surname = undefined
   ) {
     super()
     this.lastAndFirstName = this.getLastAndFirstName()
     this.title = this.firstAndLastName
     this.name = this.lastName
+    this.id = id
+    this.dirName = dirName
+    this.image = image
+    this.events = events
+    this.url = url
+    this.surname = surname
   }
 
   get birthTime(): EdtfDate {

@@ -42,6 +42,15 @@ describe("PeopleFactory", () => {
     expect(parsed).toEqual(expected)
   })
 
+
+  test("build people with surname", () => {
+    const json: PeopleJson = {title: "James Earl Carter (Junior)", surname: "Jimmy"}
+    const expected = new People(["James", "Earl"], "Carter", undefined, undefined, undefined, false, Gender.male,
+      undefined, undefined, undefined, undefined, undefined, "Junior", "Jimmy")
+    const parsed = factory.parse(json)
+    expect(parsed).toEqual(expected)
+  })
+
   test("build people with multiple first names", () => {
     const json: PeopleJson = {
       dirName: "people/m/MellonChris",

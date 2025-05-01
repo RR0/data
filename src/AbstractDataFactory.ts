@@ -30,7 +30,8 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
       name: dataJson.name,
       title,
       url: dataJson.url,
-      events: []
+      events: [],
+      surname: dataJson.surname
     }
     data.events = this.parseEvents(jsonEvents, data)
     return data as T

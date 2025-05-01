@@ -68,7 +68,7 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const gender = Gender[json.gender] || Gender.male
     const people = new People(firstNames, lastName, pseudonyms, occupations, countries,
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
-      qualifier)
+      qualifier, data.surname)
     if (!people.title) {
       people.title = title
     }
