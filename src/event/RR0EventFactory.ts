@@ -27,7 +27,9 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
       name: data.name,
       title: data.title,
       url: data.url,
-      place
+      place,
+      sources: data.sources,
+      notes: data.notes
     })
     return event as RR0Event
   }

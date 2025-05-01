@@ -10,7 +10,7 @@ export class RR0Data<T = RR0DataType> {
   /**
    * External data from which this data was devised.
    */
-  sources?: Source<RR0SourceType>[]
+  sources?: Source<RR0SourceType>[] = []
 
   /**
    * A unique identifier for this data.
