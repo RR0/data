@@ -50,13 +50,14 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
   }
 
   parse(json: PeopleJson): People {
-    const data = super.parse(json)
-    let title = data.title
+    let title = this.createTitle(json)
     let {lastName, firstNames, qualifier} = this.namesFromTitle(title)
-    lastName = json.lastName || lastName
-    firstNames = json.firstNames || firstNames
-    qualifier = json.qualifier || qualifier
+    lastName = json.lastName = json.lastName || lastName
+    firstNames = json.firstNames = json.firstNames || firstNames
+    qualifier = json.qualifier = json.qualifier || qualifier
     const pseudonyms = json.pseudonyms || []
+    json.name = json.name || lastName || firstNames[0] || pseudonyms[0] || ""
+    const data = super.parse(json)
     if (!title) {
       title = (firstNames.join(" ") + lastName || "") || pseudonyms.join(" ") || ""
     }
@@ -65,7 +66,6 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const countries = (json.countries || []).map(country => CountryCode[country])
     const discredited = json.discredited || false
     const gender = Gender[json.gender] || Gender.male
-    json.name = json.name || lastName || firstNames[0] || pseudonyms[0] || ""
     const people = new People(firstNames, lastName, pseudonyms, occupations, countries,
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
       qualifier)
