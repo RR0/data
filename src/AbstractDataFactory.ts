@@ -3,8 +3,13 @@ import fs from "fs"
 import { RR0Data } from "./RR0Data.js"
 import { RR0DataFactory } from "./RR0DataFactory.js"
 import { RR0DataJson } from "./RR0DataJson.js"
-import { RR0Event, RR0EventFactory, RR0EventJson } from "./event/index.js"
+import { RR0EventJson } from "./event/RR0EventJson.js"
+import { RR0Event } from "./event/RR0Event.js"
 import { StringUtil } from "./util/string/StringUtil.js"
+import { Level2Date as EdtfDate } from "@rr0/time"
+import { PublicationJson, SourceJson } from "./source/SourceJson.js"
+import { RR0SourceType, Source } from "./source/Source.js"
+import { RR0EventFactory } from "./event/RR0EventFactory.js"
 
 export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJson> implements RR0DataFactory<T> {
 
@@ -31,10 +36,44 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
       title,
       url: dataJson.url,
       events: [],
-      surname: dataJson.surname
+      surname: dataJson.surname,
+      notes: dataJson.notes
     }
+    data.sources = this.parseSources(dataJson.sources, data)
     data.events = this.parseEvents(jsonEvents, data)
     return data as T
+  }
+
+  parseSources(json: SourceJson[] = [], parent: RR0Data): Source[] | undefined {
+    return json?.map(json => this.parseSource(json, parent))
+  }
+
+  parseSource(json: SourceJson, parent: RR0Data): Source {
+    const type = json.type as RR0SourceType
+    const source = new Source(type) // TODO: Should be json.sourceType
+    const publicationJson = json.publication
+    Object.assign(source, {
+      authors: json.authors,
+      url: json.url,
+      name: json.name,
+      title: json.title,
+      description: json.description,
+      type: json.type,
+      index: json.index,
+      events: this.parseEvents(json.events, parent),
+      previousSourceRefs: json.previousSourceRefs
+    })
+    if (publicationJson) {
+      source.publication = this.parsePublication(publicationJson)
+    }
+    return source
+  }
+
+  parsePublication(json: PublicationJson) {
+    return {
+      publisher: json.publisher,
+      time: EdtfDate.fromString(json.time)
+    }
   }
 
   defaultJsonEvents(dataJson: J) {

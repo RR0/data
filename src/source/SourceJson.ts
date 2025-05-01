@@ -18,6 +18,7 @@ export type PublicationJson = {
 export type SourceJson = RR0DataJson & {
   /**
    * Dependent sources.
+   * @deprecated Use sources of this source-typed RR0Data
    */
   previousSourceRefs: string[]
 
