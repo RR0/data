@@ -168,6 +168,11 @@ export enum CountryCode {
   mx = "mx",
 
   /**
+   * MalaYsia
+   */
+  my = "my",
+
+  /**
    * MoZambique
    */
   mz = "mz",
