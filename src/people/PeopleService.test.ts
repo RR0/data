@@ -10,6 +10,7 @@ describe("PeopleService", () => {
   const hynekDir = path.join(rootDir, "h/HynekJosefAllen")
   const beauDir = path.join(rootDir, "b/BeauJerome")
   const aristoteDir = path.join(rootDir, "a/Aristote")
+  const jesusDir = path.join(rootDir, "j/Jesus")
   const vonBraunDir = path.join(rootDir, "v/VonBraunWerner")
   const vertongenDir = path.join(rootDir, "v/VertongenJeanLuc")
   const files = [
@@ -17,6 +18,7 @@ describe("PeopleService", () => {
     beauDir,
     path.join(rootDir, "c/CondonEdwardU"),
     hynekDir,
+    jesusDir,
     vonBraunDir,
     vertongenDir,
     path.join("test/science/crypto/ufo/enquete/dossier", "Villa"),
@@ -96,16 +98,30 @@ describe("PeopleService", () => {
   })
 
   test("Single name", () => {
-    const people = service.createFromTitle("Aristote")
-    expect(people.title).toBe("Aristote")
-    expect(people.countries).toEqual([])
-    expect(people.firstNames).toEqual([])
-    expect(people.lastName).toEqual("")
-    expect(people.hoax).toBe(false)
-    expect(people.discredited).toBe(false)
-    expect(people.dirName).toBe(aristoteDir)
-    expect(people.occupations).toEqual([])
-    expect(people.pseudonyms).toEqual([])
+    {
+      const people = service.createFromTitle("Aristote")
+      expect(people.title).toBe("Aristote")
+      expect(people.countries).toEqual([])
+      expect(people.firstNames).toEqual([])
+      expect(people.lastName).toEqual("")
+      expect(people.hoax).toBe(false)
+      expect(people.discredited).toBe(false)
+      expect(people.dirName).toBe(aristoteDir)
+      expect(people.occupations).toEqual([])
+      expect(people.pseudonyms).toEqual([])
+    }
+    {
+      const people = service.createFromTitle("Jésus")
+      expect(people.title).toBe("Jésus")
+      expect(people.countries).toEqual([])
+      expect(people.firstNames).toEqual([])
+      expect(people.lastName).toEqual("")
+      expect(people.hoax).toBe(false)
+      expect(people.discredited).toBe(false)
+      expect(people.dirName).toBe(jesusDir)
+      expect(people.occupations).toEqual([])
+      expect(people.pseudonyms).toEqual([])
+    }
   })
 
   test("build url", () => {
