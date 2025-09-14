@@ -39,6 +39,7 @@ export enum Occupation {
   hypnotherapist = "hypnotherapist",
   illusionist = "illusionist",
   journalist = "journalist",
+  judge = "judge",
   lawyer = "lawyer",
   leader = "leader",
   librarian = "librarian",

@@ -2,7 +2,7 @@
   "name": "@rr0/data",
   "type": "module",
   "author": "Jérôme Beau <rr0@rr0.org> (https://rr0.org)",
-  "version": "0.3.38",
+  "version": "0.3.39",
   "description": "RR0 data model",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@rr0/common": "^1.1.4",
     "@rr0/lang": "^0.1.12",
-    "@rr0/time": "^0.11.0",
+    "@rr0/time": "^0.11.1",
     "@rr0/place": "^0.5.3",
     "glob": "^11.0.3",
     "@javarome/fileutil": "^0.3.7"
@@ -35,7 +35,7 @@
   "devDependencies": {
     "typescript": "5.9.2",
     "@types/node": "^22.13.10",
-    "tsx": "4.20.3",
+    "tsx": "4.20.5",
     "@javarome/testscript": "^0.13.1"
   },
   "keywords": [
