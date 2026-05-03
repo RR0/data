@@ -33,6 +33,11 @@ export enum CountryCode {
   ca = "ca",
 
   /**
+   * Switzerland
+   */
+  ch = "ch",
+
+  /**
    * ChiNa
    */
   cn = "cn",
@@ -41,11 +46,6 @@ export enum CountryCode {
    * ChiLe
    */
   cl = "cl",
-
-  /**
-   * Switzerland
-   */
-  ch = "ch",
 
   /**
    * COlombia
