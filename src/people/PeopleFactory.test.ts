@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@javarome/testscript"
+import { describe, expect, test } from "vitest"
 import { RR0EventFactory } from "../event/RR0EventFactory.js"
 import { PeopleFactory } from "./PeopleFactory.js"
 import { PeopleJson } from "./PeopleJson.js"

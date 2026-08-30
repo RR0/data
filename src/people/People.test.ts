@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@javarome/testscript"
+import { describe, expect, test } from "vitest"
 import { Level2Date as EdtfDate } from "@rr0/time"
 import { People } from "./People.js"
 

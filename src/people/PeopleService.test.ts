@@ -1,6 +1,6 @@
 import { PeopleService } from "./PeopleService.js"
 import { People } from "./People.js"
-import { describe, expect, test } from "@javarome/testscript"
+import { describe, expect, test } from "vitest"
 import path from "path"
 import { rr0TestUtil } from "../test/index.js"
 

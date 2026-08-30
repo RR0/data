@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@javarome/testscript"
+import { describe, expect, test } from "vitest"
 import { EventDataFactory } from "./EventDataFactory.js"
 import { RR0EventFactory } from "./RR0EventFactory.js"
 import { FileContents, FileContentsLang } from "@javarome/fileutil"
