@@ -21,8 +21,7 @@
     "circular-deps": "dpdm src",
     "prepublishOnly": "npm run build && npm test",
     "test": "vitest run",
-    "test-one": "testscript src/people/PeopleService.test.ts",
-    "test-ci": "rm -Rf out && testscript"
+    "test-ci": "vitest run"
   },
   "dependencies": {
     "@javarome/fileutil": "^0.3.7",
