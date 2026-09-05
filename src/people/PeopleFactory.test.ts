@@ -64,6 +64,18 @@ describe("PeopleFactory", () => {
     expect(parsed.titleOverride).toBeUndefined()
   })
 
+  test("a last name that carries an inner capital is not split", () => {
+    const parsed = factory.parse({lastName: "McKinnon", firstNames: ["Gary"]})
+    expect(parsed.lastAndFirstName).toEqual("McKinnon, Gary")
+    expect(parsed.firstAndLastName).toEqual("Gary McKinnon")
+  })
+
+  test("a last name deduced from a camel-cased directory is still split", () => {
+    const parsed = factory.parse({dirName: "people/v/VanTasselGeorge"})
+    expect(parsed.lastName).toEqual("Van")
+    expect(parsed.lastAndFirstName).toEqual("Van, Tassel George")
+  })
+
   test("surnames are read as a list, whether the JSON holds one or several", () => {
     expect(factory.parse({title: "Ted Phillips"}).surnames).toEqual([])
     expect(factory.parse({title: "Theodore Phillips", surname: "Ted"}).surnames).toEqual(["Ted"])

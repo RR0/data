@@ -118,7 +118,12 @@ export class People extends RR0Data {
   }
 
   protected getLastAndFirstNames() {
-    const lastNameStr = StringUtil.camelToText(this.lastName)
+    /*
+     * No camelToText here: whether the last name was stated by the JSON or deduced by PeopleFactory (which camels it
+     * itself), it is already text. Splitting it again would break the names that legitimately carry an inner capital,
+     * such as "McKinnon" or "MacArthur".
+     */
+    const lastNameStr = this.lastName.trim()
     const firstNameStr = this.firstNames.length > 0 ? this.firstNames.join(" ") : ""
     return {lastNameStr, firstNameStr}
   }
