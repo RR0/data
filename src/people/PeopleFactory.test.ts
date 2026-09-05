@@ -55,6 +55,19 @@ describe("PeopleFactory", () => {
     expect(parsed.firstNames).toEqual(["Jérôme", "Pierre"])
     expect(parsed.lastName).toEqual("Beau")
     expect(parsed.lastAndFirstName).toEqual("Beau, Jérôme Pierre")
+    expect(parsed.titleOverride).toEqual("Jérôme Beau")
+  })
+
+  test("a title that is the only name information is not an override", () => {
+    const parsed = factory.parse({title: "Jérôme Beau"})
+    expect(parsed.title).toEqual("Jérôme Beau")
+    expect(parsed.titleOverride).toBeUndefined()
+  })
+
+  test("surnames are read as a list, whether the JSON holds one or several", () => {
+    expect(factory.parse({title: "Ted Phillips"}).surnames).toEqual([])
+    expect(factory.parse({title: "Theodore Phillips", surname: "Ted"}).surnames).toEqual(["Ted"])
+    expect(factory.parse({title: "Luis Elizondo", surname: ["Lou", "Lue"]}).surnames).toEqual(["Lou", "Lue"])
   })
 
   test("build people with surname", () => {

@@ -75,7 +75,7 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
       qualifier, data.surname)
     if (titleOverride) {
-      people.title = titleOverride
+      people.title = people.titleOverride = titleOverride
     } else if (!people.title) {
       people.title = title
     }

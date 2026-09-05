@@ -62,7 +62,7 @@ export type RR0DataJson = {
   /**
    * Unofficial name
    */
-  surname?: string
+  surname?: string | string[]
 
   /**
    * ex: "senior", "junior", "II"

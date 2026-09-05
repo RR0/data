@@ -16,6 +16,11 @@ export class People extends RR0Data {
 
   lastAndFirstName: string
 
+  /**
+   * The name to display instead of the one deduced from first and last names, as stated by the JSON's "title".
+   */
+  titleOverride?: string
+
   constructor(
     public firstNames: string[] = [],
     public lastName = "",
@@ -42,7 +47,7 @@ export class People extends RR0Data {
     url?: string,
     events: RR0Event[] = [],
     readonly qualifier = "",
-    surname = undefined
+    surname: string | string[] | undefined = undefined
   ) {
     super()
     this.lastAndFirstName = this.getLastAndFirstName()
@@ -62,6 +67,14 @@ export class People extends RR0Data {
 
   get deathTime(): EdtfDate {
     return this.events.find(event => event.eventType === "death")?.time
+  }
+
+  /**
+   * The unofficial name(s), always as a list: the JSON's "surname" holds either one or several of them.
+   */
+  get surnames(): string[] {
+    const surname = this.surname
+    return !surname ? [] : Array.isArray(surname) ? surname : [surname]
   }
 
   get firstAndLastName(): string {

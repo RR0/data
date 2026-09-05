@@ -50,9 +50,9 @@ export class RR0Data<T = RR0DataType> {
   title?: string
 
   /**
-   * Unofficial name
+   * Unofficial name(s): a nickname or usage first name, as in Theodore R. "Ted" Phillips.
    */
-  surname?: string
+  surname?: string | string[]
 
   /**
    * If this data is not more relevant, not the latest version, or state of art,
