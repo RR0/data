@@ -27,7 +27,7 @@ export class PeopleService extends AbstractDataService<People, PeopleJson> {
     const key = this.cacheKey(lastName, title)
     const dirName: string | undefined = lastName ? this.dirNameFromNames(lastName, firstNames, title) : this.getUrl(
       StringUtil.textToCamel(title), [])
-    const created = peopleFactory.parse({title, firstNames, lastName, dirName})
+    const created = peopleFactory.parse({title, dirName})  // The title is what the names are deduced from, here
     if (this.files.indexOf(dirName) < 0) {
       console.warn(`Could not find dirName "${dirName}" in PeopleService files; clearing dirName`)
       Object.assign(created, {dirName: undefined})

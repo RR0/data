@@ -43,6 +43,20 @@ describe("PeopleFactory", () => {
   })
 
 
+  test("explicit title overrides the name deduced from first and last names", () => {
+    const json: PeopleJson = {
+      dirName: "people/b/BeauJerome",
+      lastName: "Beau",
+      firstNames: ["Jérôme", "Pierre"],
+      title: "Jérôme Beau"
+    }
+    const parsed = factory.parse(json)
+    expect(parsed.title).toEqual("Jérôme Beau")
+    expect(parsed.firstNames).toEqual(["Jérôme", "Pierre"])
+    expect(parsed.lastName).toEqual("Beau")
+    expect(parsed.lastAndFirstName).toEqual("Beau, Jérôme Pierre")
+  })
+
   test("build people with surname", () => {
     const json: PeopleJson = {title: "James Earl Carter (Junior)", surname: "Jimmy"}
     const expected = new People(["James", "Earl"], "Carter", undefined, undefined, undefined, false, Gender.male,

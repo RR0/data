@@ -50,6 +50,11 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
   }
 
   parse(json: PeopleJson): People {
+    /*
+     * When the JSON provides names of its own, its "title" is not the source they were deduced from: it is an
+     * explicit override of the name to display.
+     */
+    const titleOverride = json.title && (json.lastName || json.firstNames?.length) ? json.title : undefined
     let title = this.createTitle(json)
     let {lastName, firstNames, qualifier} = this.namesFromTitle(title)
     lastName = json.lastName = json.lastName || lastName
@@ -69,7 +74,9 @@ export class PeopleFactory extends TypedDataFactory<People, PeopleJson> {
     const people = new People(firstNames, lastName, pseudonyms, occupations, countries,
       discredited, gender, data.id, data.dirName, data.image, data.url, data.events,
       qualifier, data.surname)
-    if (!people.title) {
+    if (titleOverride) {
+      people.title = titleOverride
+    } else if (!people.title) {
       people.title = title
     }
     return people
