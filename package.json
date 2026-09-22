@@ -24,7 +24,7 @@
     "test-ci": "vitest run"
   },
   "dependencies": {
-    "@javarome/fileutil": "^0.3.7",
+    "@javarome/fileutil": "^0.3.9",
     "@rr0/common": "^1.1.4",
     "@rr0/lang": "^0.1.12",
     "@rr0/place": "^0.5.3",
