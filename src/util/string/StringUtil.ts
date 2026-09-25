@@ -25,7 +25,7 @@ export class StringUtil {
 
   static camelToText(camel: string): string {
     const text = camel.trim()
-      .replace(/([A-Z]+)/g, " $1")
+      .replace(/(?<![-'’])([A-Z]+)/g, " $1")  // "Ballester-Olmos" and "O'Brien" are one word
       .replace(/([0-9]+)/g, " $1")
       .replace(/( [A-Z] )/g, " $1. ")
       .replace(/( [A-Z]$)/g, " $1.")
