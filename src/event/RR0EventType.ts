@@ -27,6 +27,11 @@ export type RR0EventType =
    */
   | "sighting"
   /**
+   * An analyst's reading of one of a case's sightings: what they hold was seen, as bodies in metres
+   * (a UFO@home interpretation), naming the sighting it explains.
+   */
+  | "interpretation"
+  /**
    * Nationality change
    */
   | "nationality"
