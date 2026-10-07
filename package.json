@@ -28,7 +28,7 @@
     "@rr0/common": "^1.1.4",
     "@rr0/lang": "^0.1.12",
     "@rr0/place": "^0.5.3",
-    "@rr0/time": "^2.0.0",
+    "@rr0/time": "^2.2.0",
     "glob": "^11.0.3"
   },
   "devDependencies": {
