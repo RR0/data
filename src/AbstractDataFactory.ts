@@ -6,7 +6,7 @@ import { RR0DataJson } from "./RR0DataJson.js"
 import { RR0EventJson } from "./event/RR0EventJson.js"
 import { RR0Event } from "./event/RR0Event.js"
 import { StringUtil } from "./util/string/StringUtil.js"
-import { Level2Date as EdtfDate } from "@rr0/time"
+import { EventTime } from "./event/EventTime.js"
 import { PublicationJson, SourceJson } from "./source/SourceJson.js"
 import { Publication, RR0SourceType, Source } from "./source/Source.js"
 import { RR0EventFactory } from "./event/RR0EventFactory.js"
@@ -75,7 +75,7 @@ export abstract class AbstractDataFactory<T extends RR0Data, J extends RR0DataJs
     }
     const jsonTime = json.time
     if (jsonTime) {
-      publication.time = EdtfDate.fromString(jsonTime)
+      publication.time = EventTime.parse(jsonTime)
     }
     return publication
   }

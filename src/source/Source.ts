@@ -1,4 +1,4 @@
-import { Level2Date as EdtfDate } from "@rr0/time"
+import { EventTimeValue } from "../event/EventTime.js"
 import { RR0Data } from "../RR0Data.js"
 
 export type Publication = {
@@ -10,7 +10,7 @@ export type Publication = {
   /**
    * When the publication occurred.
    */
-  time?: EdtfDate | undefined
+  time?: EventTimeValue | undefined
 }
 
 export type RR0SourceType = "book" | "article"

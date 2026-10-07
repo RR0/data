@@ -5,6 +5,7 @@ import { RR0EventFactory } from "./event/RR0EventFactory.js"
 import { FileContents } from "@javarome/fileutil"
 import { NamedPlace } from "@rr0/place"
 import { PeopleJson } from "./people/PeopleJson.js"
+import { EventTime } from "./event/EventTime.js"
 
 describe("TypedDataFactory", () => {
 
@@ -26,11 +27,11 @@ describe("TypedDataFactory", () => {
       const events = data.events
       expect(events.length).toBe(3)
       const birth = events.find(event => event.eventType === "birth")
-      expect(birth.time.year.value).toBe(1940)
+      expect(EventTime.start(birth.time).year.value).toBe(1940)
       const death = events.find(event => event.eventType === "death")
-      expect(death.time.year.value).toBe(2025)
-      expect(death.time.month.value).toBe(1)
-      expect(death.time.day.value).toBe(4)
+      expect(EventTime.start(death.time).year.value).toBe(2025)
+      expect(EventTime.start(death.time).month.value).toBe(1)
+      expect(EventTime.start(death.time).day.value).toBe(4)
       expect((death.place as any as NamedPlace).name).toBe("Marseille")
       const portrait = events.find(event => event.eventType === "image")
       expect(portrait.url).toBe("portrait.png")
@@ -43,13 +44,13 @@ describe("TypedDataFactory", () => {
       const events = data.events
       expect(events.length).toBe(3)
       const birth = events.find(event => event.eventType === "birth")
-      expect(birth.time.year.value).toBe(1916)
-      expect(birth.time.month.value).toBe(9)
-      expect(birth.time.day.value).toBe(24)
+      expect(EventTime.start(birth.time).year.value).toBe(1916)
+      expect(EventTime.start(birth.time).month.value).toBe(9)
+      expect(EventTime.start(birth.time).day.value).toBe(24)
       const death = events.find(event => event.eventType === "death")
-      expect(death.time.year.value).toBe(1980)
-      expect(death.time.month.value).toBe(11)
-      expect(death.time.day.value).toBe(22)
+      expect(EventTime.start(death.time).year.value).toBe(1980)
+      expect(EventTime.start(death.time).month.value).toBe(11)
+      expect(EventTime.start(death.time).day.value).toBe(22)
       const portrait = events.find(event => event.eventType === "image")
       expect(portrait.url).toBe("portrait.jpg")
     })

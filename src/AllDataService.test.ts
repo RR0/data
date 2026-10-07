@@ -4,6 +4,7 @@ import { Occupation, People } from "./people/index.js"
 import { CountryCode, Organization } from "./org/index.js"
 import { Gender } from "@rr0/common"
 import { rr0TestUtil } from "./test/index.js"
+import { EventTime } from "./event/EventTime.js"
 
 describe("AllDataService", () => {
 
@@ -21,10 +22,10 @@ describe("AllDataService", () => {
     {
       const deforge = peopleList.find(people => people.title.includes("Deforge"))
       const birthEvent = deforge.events.find(event => event.eventType === "birth")
-      expect(birthEvent.time.year.value).toBe(1940)
+      expect(EventTime.start(birthEvent.time).year.value).toBe(1940)
       const deathEvent = deforge.events.find(event => event.eventType === "death")
-      expect(deathEvent.time.year.value).toBe(2025)
-      expect(deathEvent.time.month.value).toBe(1)
+      expect(EventTime.start(deathEvent.time).year.value).toBe(2025)
+      expect(EventTime.start(deathEvent.time).month.value).toBe(1)
       expect(deforge.occupations).toEqual([Occupation.ufologist, Occupation.teacher])
       expect(deforge.countries).toEqual([CountryCode.fr])
       expect(deforge.gender).toEqual(Gender.male)

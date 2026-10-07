@@ -1,6 +1,7 @@
 import { Occupation } from "./Occupation.js"
 import { Gender } from "@rr0/common"
 import { Level2Date as EdtfDate, Level2Duration as Duration } from "@rr0/time"
+import { EventTime, EventTimeValue } from "../event/EventTime.js"
 import { RR0Data } from "../RR0Data.js"
 import { CountryCode } from "../org/country/CountryCode.js"
 import { RR0Event } from "../event/RR0Event.js"
@@ -61,11 +62,17 @@ export class People extends RR0Data {
     this.surname = surname
   }
 
-  get birthTime(): EdtfDate {
+  /**
+   * When this person was born: a date, or an interval when it is only known to be within bounds.
+   */
+  get birthTime(): EventTimeValue {
     return this.events.find(event => event.eventType === "birth")?.time
   }
 
-  get deathTime(): EdtfDate {
+  /**
+   * When this person died: a date, or an interval when it is only known to be within bounds.
+   */
+  get deathTime(): EventTimeValue {
     return this.events.find(event => event.eventType === "death")?.time
   }
 
@@ -88,17 +95,22 @@ export class People extends RR0Data {
   }
 
   isDeceased(from?: EdtfDate): boolean {
-    return this.deathTime ? true : this.birthTime ? this.isProbablyDeceased(this.birthTime, from) : false
+    return this.deathTime ? true : this.birthTime ? this.isProbablyDeceased(EventTime.start(this.birthTime), from) : false
   }
 
+  /**
+   * @param from The date to compute the age at (now by default).
+   * @return The age, from the start of the birth time to the start of the death time (that is, the first date they could be).
+   */
   getAge(from?: EdtfDate): number | undefined {
-    if (this.birthTime) {
+    const birthTime = EventTime.start(this.birthTime)
+    if (birthTime) {
       let timeDelta: Duration
       if (this.deathTime) {
-        timeDelta = Duration.between(this.birthTime, this.deathTime)
-      } else if (!this.isProbablyDeceased(this.birthTime)) {
+        timeDelta = Duration.between(birthTime, EventTime.start(this.deathTime))
+      } else if (!this.isProbablyDeceased(birthTime)) {
         const now = from ?? new EdtfDate()
-        timeDelta = Duration.between(this.birthTime, now)
+        timeDelta = Duration.between(birthTime, now)
       } else {
         return undefined
       }

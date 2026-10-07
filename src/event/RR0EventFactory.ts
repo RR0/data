@@ -1,7 +1,7 @@
 import { RR0Event } from "./RR0Event.js"
 import { RR0EventJson } from "./RR0EventJson.js"
 import { NamedPlace, Place } from "@rr0/place"
-import { Level2Date as EdtfDate } from "@rr0/time"
+import { EventTime } from "./EventTime.js"
 import { TypedDataFactory } from "../TypedDataFactory.js"
 
 export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
@@ -13,7 +13,7 @@ export class RR0EventFactory extends TypedDataFactory<RR0Event, RR0EventJson> {
 
   parse(eventJson: RR0EventJson): RR0Event {
     const data = super.parse(eventJson)
-    const time = eventJson.time ? EdtfDate.fromString(eventJson.time) : undefined
+    const time = eventJson.time ? EventTime.parse(eventJson.time) : undefined
     const eventType = eventJson.eventType || eventJson["type"]
     let placeJson = eventJson.place
     let place: Place | undefined

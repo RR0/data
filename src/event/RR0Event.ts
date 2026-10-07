@@ -1,5 +1,5 @@
 import { RR0Data } from "../RR0Data.js"
-import { Level2Date as EdtfDate } from "@rr0/time"
+import { EventTimeValue } from "./EventTime.js"
 import { Place } from "@rr0/place"
 import { RR0EventType } from "./RR0EventType.js"
 
@@ -9,7 +9,7 @@ export class RR0Event<T = RR0EventType> extends RR0Data {
               /**
                * When this event occurred.
                */
-              readonly time?: EdtfDate) {
+              readonly time?: EventTimeValue) {
     super("event")
   }
 
