@@ -32,6 +32,11 @@ export type RR0EventType =
    */
   | "interpretation"
   /**
+   * An interview about a case: who put the questions, to whom (the sighting event(s) of the witness it names in `interviewOf`), when, and
+   * what it established. The questions asked and the answers given are what the case keeps of it, not a sighting.
+   */
+  | "interview"
+  /**
    * Nationality change
    */
   | "nationality"

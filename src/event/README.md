@@ -8,6 +8,8 @@ and a `kind` (subtype) which can be:
 - `image` snapshot
 - `book` publication
 - `sighting`
+- `interpretation` of a sighting
+- `interview` of a witness about a case
 
 ```mermaid
 classDiagram
