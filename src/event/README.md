@@ -9,7 +9,7 @@ and a `kind` (subtype) which can be:
 - `book` publication
 - `sighting`
 - `interpretation` of a sighting
-- `interview` of a witness about a case
+- `interview` of a witness about a case: an `RR0Interview`, which is both an event of the case and a file of its own holding the same fields (see `RR0InterviewJson.ts`)
 
 ```mermaid
 classDiagram
