@@ -84,6 +84,11 @@ export interface RR0InterviewProofreadingJson {
 }
 
 /**
+ * A stretch of a segment: said, or taken out.
+ */
+export type RR0InterviewSegmentPartJson = { text: string } | { redacted: RR0InterviewRedactionJson }
+
+/**
  * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said. A passage taken out of
  * the published file keeps its place but loses its text, and says why in `redacted`.
  */
@@ -93,6 +98,11 @@ export interface RR0InterviewSegmentJson {
   end: number
   text?: string
   redacted?: RR0InterviewRedactionJson
+
+  /**
+   * Instead of text, when only a stretch of the segment is taken out: its stretches in order, each said or redacted.
+   */
+  parts?: RR0InterviewSegmentPartJson[]
   refs?: RR0InterviewSightingRefJson[]
 }
 
