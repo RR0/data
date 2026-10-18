@@ -94,8 +94,8 @@ export type RR0InterviewSegmentPartJson = { text: string } | { redacted: RR0Inte
  */
 export interface RR0InterviewSegmentJson {
   speaker: string
-  start: number
-  end: number
+  start?: number
+  end?: number
   text?: string
   redacted?: RR0InterviewRedactionJson
 
