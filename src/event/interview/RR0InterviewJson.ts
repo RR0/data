@@ -93,12 +93,31 @@ export interface RR0InterviewLinkPartJson {
    * What the link says when pointed at.
    */
   title?: string
+
+  /**
+   * Set in italics too: the title of a work that has its page.
+   */
+  italic?: true
+
+  /**
+   * The language of the stretch, when it is not the transcript's.
+   */
+  lang?: string
 }
 
 /**
- * A stretch of a segment: said, said with a link, or taken out.
+ * A stretch of a segment set in italics: the title of a work, or words in another language than the transcript's (`lang`).
  */
-export type RR0InterviewSegmentPartJson = { text: string } | RR0InterviewLinkPartJson | { redacted: RR0InterviewRedactionJson }
+export interface RR0InterviewItalicPartJson {
+  text: string
+  italic: true
+  lang?: string
+}
+
+/**
+ * A stretch of a segment: said, said in italics, said with a link, or taken out.
+ */
+export type RR0InterviewSegmentPartJson = { text: string } | RR0InterviewItalicPartJson | RR0InterviewLinkPartJson | { redacted: RR0InterviewRedactionJson }
 
 /**
  * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said. A passage taken out of
@@ -112,7 +131,7 @@ export interface RR0InterviewSegmentJson {
   redacted?: RR0InterviewRedactionJson
 
   /**
-   * Instead of text, when a stretch of the segment is taken out or links to a page: its stretches in order, each said, linked or redacted.
+   * Instead of text, when a stretch of the segment is taken out, links to a page or is set in italics: its stretches in order, each said, in italics, linked or redacted.
    */
   parts?: RR0InterviewSegmentPartJson[]
   refs?: RR0InterviewSightingRefJson[]
