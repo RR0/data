@@ -84,9 +84,21 @@ export interface RR0InterviewProofreadingJson {
 }
 
 /**
- * A stretch of a segment: said, or taken out.
+ * A stretch of a segment that links to a page: what was said, and where it leads (a person's, a place's, a date's or a source's page).
  */
-export type RR0InterviewSegmentPartJson = { text: string } | { redacted: RR0InterviewRedactionJson }
+export interface RR0InterviewLinkPartJson {
+  text: string
+  href: string
+  /**
+   * What the link says when pointed at.
+   */
+  title?: string
+}
+
+/**
+ * A stretch of a segment: said, said with a link, or taken out.
+ */
+export type RR0InterviewSegmentPartJson = { text: string } | RR0InterviewLinkPartJson | { redacted: RR0InterviewRedactionJson }
 
 /**
  * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said. A passage taken out of
@@ -100,7 +112,7 @@ export interface RR0InterviewSegmentJson {
   redacted?: RR0InterviewRedactionJson
 
   /**
-   * Instead of text, when only a stretch of the segment is taken out: its stretches in order, each said or redacted.
+   * Instead of text, when a stretch of the segment is taken out or links to a page: its stretches in order, each said, linked or redacted.
    */
   parts?: RR0InterviewSegmentPartJson[]
   refs?: RR0InterviewSightingRefJson[]
