@@ -46,6 +46,7 @@ export class RR0Interview extends RR0Event<"interview"> {
   speakers: Record<string, RR0InterviewSpeakerJson> = {}
   segments: RR0InterviewSegmentJson[] = []
   transcription?: RR0InterviewFileJson["transcription"]
+  proofreading?: RR0InterviewFileJson["proofreading"]
   anonymization?: RR0InterviewFileJson["anonymization"]
 
   /**
@@ -55,6 +56,17 @@ export class RR0Interview extends RR0Event<"interview"> {
 
   constructor(time?: EventTimeValue) {
     super("interview", time)
+  }
+
+  /**
+   * True when every speaker has approved the transcript (approved, or covered by a fuller version they approved).
+   */
+  get proofread(): boolean {
+    const ids = Object.keys(this.speakers)
+    return ids.length > 0 && ids.every(id => {
+      const status = this.proofreading?.[id]?.status
+      return status === "approved" || status === "covered"
+    })
   }
 
   private static ids(interviewOf: string | string[] | undefined): string[] {
@@ -98,6 +110,7 @@ export class RR0Interview extends RR0Event<"interview"> {
     interview.medium = json.medium
     interview.speakers = json.speakers ?? {}
     interview.transcription = json.transcription
+    interview.proofreading = json.proofreading
     interview.anonymization = json.anonymization
     interview.segments = json.segments ?? []
     return interview
@@ -162,6 +175,7 @@ export class RR0Interview extends RR0Event<"interview"> {
       ...(this.summary !== undefined ? { summary: this.summary } : {}),
       speakers: this.speakers,
       ...(this.transcription !== undefined ? { transcription: this.transcription } : {}),
+      ...(this.proofreading !== undefined ? { proofreading: this.proofreading } : {}),
       ...(this.anonymization !== undefined ? { anonymization: this.anonymization } : {}),
       segments: this.segments
     }

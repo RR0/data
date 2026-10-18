@@ -35,7 +35,7 @@ describe("RR0Interview", () => {
       interviewer: { role: "interviewer", by: { people: "BeauJerome" } },
       witness: { role: "witness", title: "Q. B.", of: "qb" }
     },
-    transcription: { method: "automatic", engine: "whisper.cpp large-v3-turbo", proofread: false },
+    transcription: { method: "automatic", engine: "whisper.cpp large-v3-turbo" },
     anonymization: { replaced: ["first names"], marker: "[prénom]" },
     segments: [
       { speaker: "interviewer", start: 0, end: 27.6, text: "Ok. Donc là, tu vois…" },
@@ -60,6 +60,22 @@ describe("RR0Interview", () => {
     expect(interview.segments).toHaveLength(2)
     expect(interview.speakers.witness.of).toBe("qb")
     expect(interview.toFileJson()).toEqual(file)
+  })
+
+  test("keeps a redacted passage, its reason and its links to the observation, and is proofread when every speaker approved", () => {
+    const withRedaction: RR0InterviewFileJson = {
+      ...file,
+      proofreading: { interviewer: { status: "approved", date: "2026-10-18" }, witness: { status: "pending" } },
+      segments: [
+        { speaker: "witness", start: 30, end: 53, text: "Bien sûr.", refs: [{ at: 1.5, range: [0, 4] }] },
+        { speaker: "witness", start: 60, end: 90, redacted: { reason: { fr: "vie privée", en: "private life" } } }
+      ]
+    }
+    const interview = RR0Interview.fromFileJson(withRedaction)
+    expect(interview.toFileJson()).toEqual(withRedaction)
+    expect(interview.proofread).toBe(false)
+    interview.proofreading!.witness = { status: "covered", coveredBy: "interview-full" }
+    expect(interview.proofread).toBe(true)
   })
 
   test("holds in its file everything its event does, and the other way round: the event and the file say the same thing", () => {

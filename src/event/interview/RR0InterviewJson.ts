@@ -42,13 +42,58 @@ export interface RR0InterviewSpeakerJson {
 }
 
 /**
- * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said.
+ * A place in the interview that points at a moment of the observation it is about.
+ */
+export interface RR0InterviewSightingRefJson {
+
+  /**
+   * The id of the sighting event of the case; the interview's own `interviewOf` when omitted.
+   */
+  sighting?: string
+
+  /**
+   * Seconds since the beginning of the observation.
+   */
+  at: number
+
+  /**
+   * The part of the segment's text it is about, as [from, to) character offsets; the whole segment when omitted.
+   */
+  range?: [number, number]
+}
+
+/**
+ * Why a passage was taken out of a published interview.
+ */
+export interface RR0InterviewRedactionJson {
+  reason: SaidTextJson
+}
+
+/**
+ * Whether a participant has approved the transcript as it is published: pending, approved, or covered (approved through a fuller version,
+ * since a file holding less than one they approved needs no new approval).
+ */
+export interface RR0InterviewProofreadingJson {
+  status: "pending" | "approved" | "covered"
+  date?: string
+
+  /**
+   * For covered: the id of the fuller version they approved.
+   */
+  coveredBy?: string
+}
+
+/**
+ * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said. A passage taken out of
+ * the published file keeps its place but loses its text, and says why in `redacted`.
  */
 export interface RR0InterviewSegmentJson {
   speaker: string
   start: number
   end: number
-  text: string
+  text?: string
+  redacted?: RR0InterviewRedactionJson
+  refs?: RR0InterviewSightingRefJson[]
 }
 
 /**
@@ -88,7 +133,12 @@ export interface RR0InterviewFileJson {
    */
   summary?: SaidTextJson
   speakers: Record<string, RR0InterviewSpeakerJson>
-  transcription?: { method?: "automatic" | "manual", engine?: string, proofread?: boolean, note?: string }
+  transcription?: { method?: "automatic" | "manual", engine?: string, note?: string }
+
+  /**
+   * Who approved the transcript, by speaker id. It is proofread when every speaker has.
+   */
+  proofreading?: Record<string, RR0InterviewProofreadingJson>
 
   /**
    * What was taken out to anonymise it, and what stands in its place.
