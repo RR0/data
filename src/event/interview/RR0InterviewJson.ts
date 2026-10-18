@@ -84,40 +84,9 @@ export interface RR0InterviewProofreadingJson {
 }
 
 /**
- * A stretch of a segment that links to a page: what was said, and where it leads (a person's, a place's, a date's or a source's page).
+ * A stretch of a segment: said, or taken out. What is said is plain text or HTML, as a segment's `text` is.
  */
-export interface RR0InterviewLinkPartJson {
-  text: string
-  href: string
-  /**
-   * What the link says when pointed at.
-   */
-  title?: string
-
-  /**
-   * Set in italics too: the title of a work that has its page.
-   */
-  italic?: true
-
-  /**
-   * The language of the stretch, when it is not the transcript's.
-   */
-  lang?: string
-}
-
-/**
- * A stretch of a segment set in italics: the title of a work, or words in another language than the transcript's (`lang`).
- */
-export interface RR0InterviewItalicPartJson {
-  text: string
-  italic: true
-  lang?: string
-}
-
-/**
- * A stretch of a segment: said, said in italics, said with a link, or taken out.
- */
-export type RR0InterviewSegmentPartJson = { text: string } | RR0InterviewItalicPartJson | RR0InterviewLinkPartJson | { redacted: RR0InterviewRedactionJson }
+export type RR0InterviewSegmentPartJson = { text: string } | { redacted: RR0InterviewRedactionJson }
 
 /**
  * One turn of speech: one speaker, from `start` to `end` seconds after the beginning of the recording, and what was said. A passage taken out of
@@ -127,11 +96,16 @@ export interface RR0InterviewSegmentJson {
   speaker: string
   start?: number
   end?: number
+
+  /**
+   * What was said: plain text or HTML (links, a title in italics, a foreign word in its language: what a page publishing it would write). The
+   * format says what HTML does not (who speaks, when, what was taken out); the rest is HTML's.
+   */
   text?: string
   redacted?: RR0InterviewRedactionJson
 
   /**
-   * Instead of text, when a stretch of the segment is taken out, links to a page or is set in italics: its stretches in order, each said, in italics, linked or redacted.
+   * Instead of text, when only a stretch of the segment is taken out: its stretches in order, each said or redacted.
    */
   parts?: RR0InterviewSegmentPartJson[]
   refs?: RR0InterviewSightingRefJson[]
